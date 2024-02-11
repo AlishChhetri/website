@@ -47,7 +47,7 @@
   font-size: 30px;
   font-weight: 600;
   padding: 17px 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px 0 rgba(102, 102, 102, 0.25);
 }
 
 .heroImg {
@@ -65,7 +65,7 @@
     transform: translate(0, 0px);
   }
   50% {
-    transform: translate(0, 10px);
+    transform: translate(0, 15px);
   }
   100% {
     transform: translate(0, -0px);
@@ -74,29 +74,29 @@
 
 .topBlur {
   position: absolute;
-  width: 50vw;
-  height: 50vw;
+  width: 75vw;
+  height: 75vw;
   min-width: 350px;
   min-width: 350px;
-  top: -128px;
-  left: -10vw;
+  top: -250px;
+  left: -30vw;
   border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
+  background: rgba(1, 37, 15, 0.26);
+  filter: blur(1000px);
   z-index: 0;
 }
 
 .bottomBlur {
   position: absolute;
   width: 70vw;
-  height: 50vw;
+  height: 25vw;
   min-width: 350px;
   min-width: 250px;
   top: 246px;
   right: -25vw;
   border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
+  background: rgba(0, 155, 59, 0.26);
+  filter: blur(500px);
   z-index: 0;
 }
 
