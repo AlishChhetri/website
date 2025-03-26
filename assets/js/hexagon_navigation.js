@@ -35,6 +35,13 @@ class HexagonNavigation {
                     this.navigateBack();
                 }
             });
+            
+            // Set initial state class
+            this.centerHex.classList.add('state-idle');
+            this.subHexagons.forEach(hex => {
+                hex.classList.add('state-idle');
+            });
+            
         } catch (error) {
             console.error('Error initializing hexagon navigation:', error);
             // Fallback to hardcoded data if JSON fetch fails
@@ -78,7 +85,7 @@ class HexagonNavigation {
         } else {
             // It's a directory/section
             event.preventDefault();
-            this.animate(clickedItem.path);
+            this.changeSection(clickedItem.path);
         }
     }
 
@@ -161,60 +168,64 @@ class HexagonNavigation {
             }
         });
 
-        // Make sure all animation classes are removed when updating content
-        this.subHexagons.forEach(hex => {
-            hex.classList.remove('coming-in', 'going-out');
-        });
-
         this.currentSection = section;
     }
 
-    // Simplified animate method with simultaneous movement
-
-    animate(sectionKey) {
+    changeSection(sectionKey) {
         if (this.isAnimating) return;
         this.isAnimating = true;
         
-        // Add animating class to center hexagon
-        this.centerHex.classList.add('animating');
-
-        // PHASE 1: All hexagons move to center position (0,0)
+        // Execute the animation sequence using CSS state classes
+        
+        // 1. Center is changing
+        this.centerHex.classList.remove('state-idle');
+        this.centerHex.classList.add('state-changing');
+        
+        // 2. All hexagons converge to center
         const visibleHexagons = Array.from(this.subHexagons).filter(hex => hex.style.display !== 'none');
         visibleHexagons.forEach(hex => {
-            hex.classList.add('coming-in');
+            hex.classList.remove('state-idle');
+            hex.classList.add('state-converging');
         });
-
-        // PHASE 2: After hexagons meet in center, update content and send them back out
+        
+        // 3. After hexagons reach center, update content and begin dispersing
         setTimeout(() => {
+            // Update the content
             this.updateContent(sectionKey);
             
-            // Remove animating class from center after content update
-            setTimeout(() => {
-                this.centerHex.classList.remove('animating');
-            }, 150);
+            // Prepare for dispersion
+            visibleHexagons.forEach(hex => {
+                hex.classList.remove('state-converging');
+                hex.classList.add('state-dispersing');
+            });
             
-            // All hexagons go back to their positions
-            const updatedVisibleHexagons = Array.from(this.subHexagons).filter(hex => hex.style.display !== 'none');
-            updatedVisibleHexagons.forEach(hex => {
-                hex.classList.add('going-out');
-                hex.classList.remove('coming-in');
-            });
-        }, 300); // Shorter timing for center meeting point
-
-        // Reset positions and cleanup
-        setTimeout(() => {
-            this.subHexagons.forEach(hex => {
-                hex.classList.remove('going-out');
-            });
-            this.isAnimating = false;
-        }, 600); // Shorter overall animation duration
+            // 4. After a short transition, make the new hexagons return to normal
+            setTimeout(() => {
+                const newVisibleHexagons = Array.from(this.subHexagons).filter(hex => hex.style.display !== 'none');
+                newVisibleHexagons.forEach(hex => {
+                    hex.classList.remove('state-dispersing');
+                    hex.classList.add('state-returning');
+                });
+                
+                this.centerHex.classList.remove('state-changing');
+                this.centerHex.classList.add('state-idle');
+                
+                // 5. Animation sequence complete
+                setTimeout(() => {
+                    newVisibleHexagons.forEach(hex => {
+                        hex.classList.remove('state-returning');
+                        hex.classList.add('state-idle');
+                    });
+                    this.isAnimating = false;
+                }, 300);
+            }, 150);
+        }, 300);
     }
 
-    // Update navigateBack method to use the same improved animation logic
     navigateBack() {
         const parentSection = this.navigationData[this.currentSection].parent;
         if (parentSection) {
-            this.animate(parentSection);
+            this.changeSection(parentSection);
         }
     }
 }

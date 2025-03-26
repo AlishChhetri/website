@@ -385,6 +385,71 @@ body {
     transition: transform 0.2s ease;
 }
 
+/* ---------- HEXAGON NAVIGATION ANIMATIONS ---------- */
+
+/* Define transition properties for all hexagons */
+.hexagon-center, .hexagon-sub {
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0),
+                z-index 0s;
+}
+
+/* Animation states */
+.hexagon-sub.state-idle {
+    /* Default state - positioned according to its layout class */
+    z-index: 1;
+    /* Transform is applied via the position classes (hexagon-sub-1, etc.) */
+}
+
+.hexagon-sub.state-converging {
+    transform: translate(0, 0) !important;
+    z-index: 0;
+}
+
+.hexagon-sub.state-dispersing {
+    z-index: 0;
+    /* Each hexagon will go back to its position based on existing transform */
+}
+
+.hexagon-sub.state-returning {
+    /* The transition back to idle state */
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    z-index: 1;
+}
+
+/* Center hexagon animation states */
+.hexagon-center.state-idle {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.hexagon-center.state-changing {
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.hexagon-center .hexagon-text {
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.hexagon-center.state-changing .hexagon-text {
+    transform: scale(0.9);
+}
+
+.hexagon-center.state-idle .hexagon-text {
+    transform: scale(1);
+}
+
+/* Replace the old animation classes */
+.hexagon-sub.coming-in,
+.hexagon-sub.going-out {
+    /* Remove these styles as they'll be replaced by the state classes */
+    transition: none;
+}
+
+.hexagon-center.animating,
+.hexagon-center:not(.animating) {
+    /* Remove these styles as they'll be replaced by the state classes */
+    transition: none;
+}
+
 /* ---------- BASE PAGE TEMPLATE ---------- */
 
 .base-body {
