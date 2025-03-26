@@ -1,0 +1,703 @@
+{
+    "main": {
+        "center": "Home",
+        "subs": [
+            {
+                "name": "About",
+                "type": "page",
+                "path": "/pages/about.html"
+            },
+            {
+                "name": "Projects",
+                "type": "directory",
+                "path": "projects"
+            },
+            {
+                "name": "Skills",
+                "type": "directory",
+                "path": "skills"
+            },
+            {
+                "name": "Blog",
+                "type": "page",
+                "path": "/pages/blog.html"
+            },
+            {
+                "name": "Games",
+                "type": "directory",
+                "path": "games"
+            },
+            {
+                "name": "Resume",
+                "type": "download",
+                "path": "/assets/resume.pdf"
+            }
+        ],
+        "parent": null
+    },
+    "projects": {
+        "center": "Projects",
+        "subs": [
+            {
+                "name": "Project 1",
+                "type": "page",
+                "path": "/pages/projects/project_one.html"
+            },
+            {
+                "name": "Project 2",
+                "type": "page",
+                "path": "/pages/projects/project_two.html"
+            },
+            {
+                "name": "Project 3",
+                "type": "page",
+                "path": "/pages/projects/project_three.html"
+            },
+            {
+                "name": "Project 4",
+                "type": "page",
+                "path": "/pages/projects/project_four.html"
+            },
+            {
+                "name": "Project 5",
+                "type": "page",
+                "path": "/pages/projects/project_five.html"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "projects_more"
+            }
+        ],
+        "parent": "main"
+    },
+    "projects_more": {
+        "center": "Projects",
+        "subs": [
+            {
+                "name": "Project 6",
+                "type": "page",
+                "path": "/pages/projects/project_six.html"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "projects"
+    },
+    "blog": {
+        "center": "Blog",
+        "subs": [
+            {
+                "name": "Blog 1",
+                "type": "page",
+                "path": "/pages/blog/blog_one.html"
+            },
+            {
+                "name": "Blog 2",
+                "type": "page",
+                "path": "/pages/blog/blog_two.html"
+            },
+            {
+                "name": "Blog 3",
+                "type": "page",
+                "path": "/pages/blog/blog_three.html"
+            },
+            {
+                "name": "Blog 4",
+                "type": "page",
+                "path": "/pages/blog/blog_four.html"
+            },
+            {
+                "name": "Blog 5",
+                "type": "page",
+                "path": "/pages/blog/blog_five.html"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "blog_more"
+            }
+        ],
+        "parent": "main"
+    },
+    "blog_more": {
+        "center": "Blog",
+        "subs": [
+            {
+                "name": "Blog 6",
+                "type": "page",
+                "path": "/pages/blog/blog_six.html"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "blog"
+    },
+    "skills": {
+        "center": "Skills",
+        "subs": [
+            {
+                "name": "Web Dev",
+                "type": "directory",
+                "path": "skills_web"
+            },
+            {
+                "name": "Software Engineering",
+                "type": "directory",
+                "path": "skills_software"
+            },
+            {
+                "name": "Data Science",
+                "type": "directory",
+                "path": "skills_data"
+            },
+            {
+                "name": "Design",
+                "type": "directory",
+                "path": "skills_design"
+            },
+            {
+                "name": "DevOps",
+                "type": "directory",
+                "path": "skills_devops"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "skills_more"
+            }
+        ],
+        "parent": "main"
+    },
+    "skills_web": {
+        "center": "Web Dev",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "Skill 2",
+                "type": "image"
+            },
+            {
+                "name": "Skill 3",
+                "type": "image"
+            },
+            {
+                "name": "Skill 4",
+                "type": "image"
+            },
+            {
+                "name": "Skill 5",
+                "type": "image"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "skills_web_more"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_web_more": {
+        "center": "Web Dev",
+        "subs": [
+            {
+                "name": "Skill 6",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_web"
+    },
+    "skills_software": {
+        "center": "Software Engineering",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "Skill 2",
+                "type": "image"
+            },
+            {
+                "name": "Skill 3",
+                "type": "image"
+            },
+            {
+                "name": "Skill 4",
+                "type": "image"
+            },
+            {
+                "name": "Skill 5",
+                "type": "image"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "skills_software_more"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_software_more": {
+        "center": "Software Engineering",
+        "subs": [
+            {
+                "name": "Skill 6",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_software"
+    },
+    "skills_data": {
+        "center": "Data Science",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "Skill 2",
+                "type": "image"
+            },
+            {
+                "name": "Skill 3",
+                "type": "image"
+            },
+            {
+                "name": "Skill 4",
+                "type": "image"
+            },
+            {
+                "name": "Skill 5",
+                "type": "image"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "skills_data_more"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_data_more": {
+        "center": "Data Science",
+        "subs": [
+            {
+                "name": "Skill 6",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_data"
+    },
+    "skills_design": {
+        "center": "Design",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "Skill 2",
+                "type": "image"
+            },
+            {
+                "name": "Skill 3",
+                "type": "image"
+            },
+            {
+                "name": "Skill 4",
+                "type": "image"
+            },
+            {
+                "name": "Skill 5",
+                "type": "image"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "skills_design_more"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_design_more": {
+        "center": "Design",
+        "subs": [
+            {
+                "name": "Skill 6",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_design"
+    },
+    "skills_devops": {
+        "center": "DevOps",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "Skill 2",
+                "type": "image"
+            },
+            {
+                "name": "Skill 3",
+                "type": "image"
+            },
+            {
+                "name": "Skill 4",
+                "type": "image"
+            },
+            {
+                "name": "Skill 5",
+                "type": "image"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "skills_devops_more"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_devops_more": {
+        "center": "DevOps",
+        "subs": [
+            {
+                "name": "Skill 6",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_devops"
+    },
+    "skills_more": {
+        "center": "Skills",
+        "subs": [
+            {
+                "name": "UI/UX",
+                "type": "directory",
+                "path": "skills_uiux"
+            },
+            {
+                "name": "Mobile",
+                "type": "directory",
+                "path": "skills_mobile"
+            },
+            {
+                "name": "Database",
+                "type": "directory",
+                "path": "skills_database"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_uiux": {
+        "center": "UI/UX",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_more"
+    },
+    "skills_mobile": {
+        "center": "Mobile",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_more"
+    },
+    "skills_database": {
+        "center": "Database",
+        "subs": [
+            {
+                "name": "Skill 1",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills_more"
+    },
+    "games": {
+        "center": "Games",
+        "subs": [
+            {
+                "name": "Game 1",
+                "type": "page",
+                "path": "/pages/games/game_one.html"
+            },
+            {
+                "name": "Game 2",
+                "type": "page",
+                "path": "/pages/games/game_two.html"
+            },
+            {
+                "name": "Game 3",
+                "type": "page",
+                "path": "/pages/games/game_three.html"
+            },
+            {
+                "name": "Game 4",
+                "type": "page",
+                "path": "/pages/games/game_four.html"
+            },
+            {
+                "name": "Game 5",
+                "type": "page",
+                "path": "/pages/games/game_five.html"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "games_more"
+            }
+        ],
+        "parent": "main"
+    },
+    "games_more": {
+        "center": "Games",
+        "subs": [
+            {
+                "name": "Game 6",
+                "type": "page",
+                "path": "/pages/games/game_six.html"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "games"
+    }
+}
