@@ -330,43 +330,59 @@ body {
 }
 
 /* Hexagon positions - true honeycomb arrangement */
-.hexagon-sub-1 { transform: translate(-108.25%, -62.5%); } /* Top left */
-.hexagon-sub-2 { transform: translate(0, -125%); }         /* Top */
-.hexagon-sub-3 { transform: translate(108.25%, -62.5%); }  /* Top right */
-.hexagon-sub-4 { transform: translate(108.25%, 62.5%); }   /* Bottom right */
-.hexagon-sub-5 { transform: translate(0, 125%); }          /* Bottom */
-.hexagon-sub-6 { transform: translate(-108.25%, 62.5%); }  /* Bottom left */
+.hexagon-sub-1 { 
+    --hex-translate-x: -108.25%; 
+    --hex-translate-y: -62.5%;
+    transform: translate(-108.25%, -62.5%); 
+}
+.hexagon-sub-2 { 
+    --hex-translate-x: 0; 
+    --hex-translate-y: -125%;
+    transform: translate(0, -125%); 
+}
+.hexagon-sub-3 { 
+    --hex-translate-x: 108.25%; 
+    --hex-translate-y: -62.5%;
+    transform: translate(108.25%, -62.5%); 
+}
+.hexagon-sub-4 { 
+    --hex-translate-x: 108.25%; 
+    --hex-translate-y: 62.5%;
+    transform: translate(108.25%, 62.5%); 
+}
+.hexagon-sub-5 { 
+    --hex-translate-x: 0; 
+    --hex-translate-y: 125%;
+    transform: translate(0, 125%); 
+}
+.hexagon-sub-6 { 
+    --hex-translate-x: -108.25%; 
+    --hex-translate-y: 62.5%;
+    transform: translate(-108.25%, 62.5%); 
+}
 
 /* Animation classes with proper transitions */
 .hexagon-sub.coming-in {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) !important;
+    transform: translate(0, 0) !important;
     z-index: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    transition: all 0.2s ease;
 }
 
 .hexagon-sub.going-out {
-    opacity: 0;
-    transform: scale(0.8) !important;
+    transform: translate(var(--hex-translate-x, 0), var(--hex-translate-y, 0)) scale(0.9) !important;
     z-index: 1;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    transition: all 0.2s ease;
 }
 
 /* Animation states for center text */
 .hexagon-center.animating .hexagon-text {
-    opacity: 0;
     transform: scale(0.9);
-    transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0), 
-                transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    transition: transform 0.2s ease;
 }
 
 .hexagon-center:not(.animating) .hexagon-text {
-    opacity: 1;
     transform: scale(1);
-    transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0), 
-                transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    transition: transform 0.2s ease;
 }
 
 /* ---------- BASE PAGE TEMPLATE ---------- */

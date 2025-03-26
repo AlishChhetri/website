@@ -178,11 +178,10 @@ class HexagonNavigation {
         // Add animating class to center hexagon
         this.centerHex.classList.add('animating');
 
-        // PHASE 1: All hexagons come to center simultaneously
-        this.subHexagons.forEach(hex => {
-            if (hex.style.display !== 'none') {
-                hex.classList.add('coming-in');
-            }
+        // PHASE 1: All hexagons move to center position (0,0)
+        const visibleHexagons = Array.from(this.subHexagons).filter(hex => hex.style.display !== 'none');
+        visibleHexagons.forEach(hex => {
+            hex.classList.add('coming-in');
         });
 
         // PHASE 2: After hexagons meet in center, update content and send them back out
@@ -194,14 +193,13 @@ class HexagonNavigation {
                 this.centerHex.classList.remove('animating');
             }, 150);
             
-            // All hexagons go out simultaneously
-            this.subHexagons.forEach(hex => {
-                if (hex.style.display !== 'none') {
-                    hex.classList.add('going-out');
-                    hex.classList.remove('coming-in');
-                }
+            // All hexagons go back to their positions
+            const updatedVisibleHexagons = Array.from(this.subHexagons).filter(hex => hex.style.display !== 'none');
+            updatedVisibleHexagons.forEach(hex => {
+                hex.classList.add('going-out');
+                hex.classList.remove('coming-in');
             });
-        }, 500); // Timing for the center meeting point
+        }, 300); // Shorter timing for center meeting point
 
         // Reset positions and cleanup
         setTimeout(() => {
@@ -209,7 +207,7 @@ class HexagonNavigation {
                 hex.classList.remove('going-out');
             });
             this.isAnimating = false;
-        }, 1000); // Enough time for transitions to complete
+        }, 600); // Shorter overall animation duration
     }
 
     // Update navigateBack method to use the same improved animation logic
