@@ -253,7 +253,7 @@ body {
     margin: 0 auto;
     overflow: visible;
     flex: 1;
-    max-width: 650px; /* Slightly increased from 600px */
+    max-width: 800px; /* Increased from 650px */
 }
 
 .hexagon-container {
@@ -262,8 +262,8 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 650px;  /* Increased from 550px */
-    min-height: 600px; /* Increased from 500px */
+    max-width: 800px; /* Increased from 650px */
+    min-height: 700px; /* Increased from 600px */
     perspective: 1000px;
     margin: 0 auto;
     height: 100%;
@@ -273,8 +273,8 @@ body {
 /* Base hexagon styling - shared properties */
 .hexagon-center, .hexagon-sub {
     position: absolute;
-    width: 150px;  /* Increased from 120px */
-    height: 130px; /* Increased from 104px */
+    width: 180px; /* Increased from 150px */
+    height: 156px; /* Increased from 130px */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -308,8 +308,8 @@ body {
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    width: 180px;  /* Increased from 140px */
-    height: 180px; /* Increased from 140px */
+    width: 220px; /* Increased from 180px */
+    height: 220px; /* Increased from 180px */
 }
 
 .hexagon-center .hexagon-svg {
@@ -317,14 +317,14 @@ body {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transform: scale(175%);
+    transform: scale(200%);
 }
 
 /* Sub hexagon specific styling */
 .hexagon-sub {
     z-index: 1;
-    width: 120px; 
-    height: 120px;
+    width: 144px; /* Increased from 120px */
+    height: 144px; /* Increased from 120px */
 }
 
 .hexagon-sub .hexagon-svg {
@@ -355,7 +355,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;  /* Slightly larger font */
+    font-size: 1.2rem; /* Increased from 1rem */
     line-height: 1.2;
     margin: 0;
     transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
@@ -368,42 +368,42 @@ body {
 
 /* Center hexagon text */
 .hexagon-center .hexagon-text {
-    font-size: 1.4rem;  /* Increased from 1.2rem */
+    font-size: 1.6rem; /* Increased from 1.4rem */
     color: var(--secondary-color);
     font-weight: 800;
     width: 70%;
 }
 
-/* Hexagon positions - true honeycomb arrangement */
+/* Hexagon positions - increased distance for larger hexagons */
 .hexagon-sub-1 { 
-    --hex-translate-x: -125%; 
-    --hex-translate-y: -72.5%;
-    transform: translate(-125%, -72.5%); 
+    --hex-translate-x: -140%; 
+    --hex-translate-y: -80%;
+    transform: translate(-140%, -80%); 
 }
 .hexagon-sub-2 { 
     --hex-translate-x: 0; 
-    --hex-translate-y: -145%;
-    transform: translate(0, -145%); 
+    --hex-translate-y: -160%;
+    transform: translate(0, -160%); 
 }
 .hexagon-sub-3 { 
-    --hex-translate-x: 125%; 
-    --hex-translate-y: -72.5%;
-    transform: translate(125%, -72.5%); 
+    --hex-translate-x: 140%; 
+    --hex-translate-y: -80%;
+    transform: translate(140%, -80%); 
 }
 .hexagon-sub-4 { 
-    --hex-translate-x: 125%; 
-    --hex-translate-y: 72.5%;
-    transform: translate(125%, 72.5%); 
+    --hex-translate-x: 140%; 
+    --hex-translate-y: 80%;
+    transform: translate(140%, 80%); 
 }
 .hexagon-sub-5 { 
     --hex-translate-x: 0; 
-    --hex-translate-y: 145%;
-    transform: translate(0, 145%); 
+    --hex-translate-y: 160%;
+    transform: translate(0, 160%); 
 }
 .hexagon-sub-6 { 
-    --hex-translate-x: -125%; 
-    --hex-translate-y: 72.5%;
-    transform: translate(-125%, 72.5%); 
+    --hex-translate-x: -140%; 
+    --hex-translate-y: 80%;
+    transform: translate(-140%, 80%); 
 }
 
 /* Animation classes with proper transitions */
@@ -521,12 +521,12 @@ body {
     
     .hexagon-navigation {
         padding: 0;
-        min-height: 500px;
+        min-height: 600px; /* Increased from 500px */
     }
     
     .hexagon-container {
         transform: scale(0.9);
-        min-height: 500px;
+        min-height: 600px; /* Increased from 500px */
     }
 }
 
@@ -536,8 +536,8 @@ body {
     }
     
     .hexagon-container {
-        transform: scale(0.8);
-        min-height: 450px;
+        transform: scale(0.75); /* Adjusted from 0.8 */
+        min-height: 550px; /* Increased from 450px */
     }
     
     .hero-content h1 {
@@ -547,8 +547,8 @@ body {
 
 @media (max-width: 480px) {
     .hexagon-container {
-        transform: scale(0.7);
-        min-height: 400px;
+        transform: scale(0.6); /* Adjusted from 0.7 */
+        min-height: 500px; /* Increased from 400px */
     }
 }
 
@@ -675,12 +675,12 @@ body {
 .portfolio-content h3, .blog-content h3 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
-    color: var(--text-color);
+    color: var (--text-color);
 }
 
 .portfolio-content p, .blog-content p {
     font-size: 1.1rem;
-    color: var(--text-color-secondary);
+    color: var (--text-color-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
 }
