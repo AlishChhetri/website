@@ -172,96 +172,120 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Determine the correct path to sitemap.json based on current location
     function getSitemapPath() {
-        // Get current path and calculate relative path to assets
+        // Get current path
         const currentPath = window.location.pathname;
         
         // For GitHub Pages, handle the repository name in the path
         const repoMatch = currentPath.match(/\/[^\/]+\/[^\/]+\//);
         const baseRepo = repoMatch ? repoMatch[0] : '';
         
-        // Count directory levels from root
-        let dirCount = 0;
+        // Normalize the path by removing the repository part
         let tempPath = currentPath.replace(baseRepo, '/');
         
-        // Skip the first slash
-        let pathParts = tempPath.split('/').filter(part => part.length > 0);
-        dirCount = pathParts.length;
+        // Count directory levels from root by splitting the path
+        const pathParts = tempPath.split('/').filter(part => part.length > 0);
         
-        // If we're in a file like '/pages/about.html', we need to go up one level
+        // Start with base path count
+        let dirCount = pathParts.length;
+        
+        // If the last part is a file (contains a dot), we need to go up one more level
         if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes('.')) {
             dirCount--;
         }
         
-        // Build the relative path to assets/js/sitemap.json
-        let assetsPath = '';
-        if (dirCount === 0) {
-            // We're at the root
-            assetsPath = 'assets/js/sitemap.json';
-        } else {
-            // We're in subdirectories, go up the correct number of levels
-            assetsPath = '../'.repeat(dirCount) + 'assets/js/sitemap.json';
+        // Handle special case for root (index.html)
+        if (tempPath === '/' || tempPath.endsWith('/index.html')) {
+            dirCount = 0;
         }
         
-        return assetsPath;
+        // Build the path to sitemap.json with the correct number of "../"
+        let sitemapPath = '';
+        if (dirCount === 0) {
+            // We're at the root
+            sitemapPath = 'assets/js/sitemap.json';
+        } else {
+            // We're in subdirectories, go up the correct number of levels
+            sitemapPath = '../'.repeat(dirCount) + 'assets/js/sitemap.json';
+        }
+        
+        console.log("Calculated sitemap path:", sitemapPath, "for current path:", currentPath);
+        return sitemapPath;
     }
     
     // Main function to build the search index
     async function buildSearchIndex() {
         searchData.length = 0; // Clear existing data
         
-        // Calculate the asset path for sitemap.json
-        const assetsPath = getSitemapPath();
+        // Try different possible paths to find sitemap.json
+        const possiblePaths = [
+            getSitemapPath(),               // Calculated path
+            'assets/js/sitemap.json',       // Direct from root
+            '../assets/js/sitemap.json',    // One level up
+            '../../assets/js/sitemap.json', // Two levels up
+            '/assets/js/sitemap.json'       // Absolute path
+        ];
         
-        console.log("Attempting to load sitemap from:", assetsPath);
+        let sitemapData = null;
+        let loadedPath = null;
         
-        try {
-            const response = await fetch(assetsPath);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch sitemap.json from ${assetsPath}: ${response.status}`);
+        // Try each path until we find the sitemap
+        for (const path of possiblePaths) {
+            try {
+                console.log("Attempting to load sitemap from:", path);
+                const response = await fetch(path);
+                
+                if (response.ok) {
+                    sitemapData = await response.json();
+                    loadedPath = path;
+                    console.log("Successfully loaded sitemap from:", path);
+                    break;
+                }
+            } catch (error) {
+                console.warn(`Failed to load sitemap from ${path}:`, error.message);
             }
-            
-            const sitemapData = await response.json();
-            
-            // Set the base URL from the sitemap
-            siteBaseUrl = sitemapData.baseUrl;
-            console.log("Using base URL from sitemap:", siteBaseUrl);
-            
-            // Now that we have the base URL, fix links in the current page
-            fixPageLinks();
-            
-            console.log("Building search index using sitemap with", sitemapData.sitemap.length, "pages");
-            
-            // First, add all items directly from the sitemap
-            for (const page of sitemapData.sitemap) {
-                // Create initial placeholder entry with metadata from sitemap
-                const pageUrl = normalizeUrl(page.url);
-                
-                // Use whatever information we have from the sitemap
-                const initialData = {
-                    title: page.title || getFileNameFromUrl(page.url),
-                    content: '',  // Will be populated after fetching
-                    preview: 'Loading content...',
-                    url: pageUrl,
-                    type: page.badge || 'page',
-                    relPath: page.url
-                };
-                
-                // Add to search index immediately so we have basic search functionality
-                searchData.push(initialData);
-                
-                // Fetch the HTML asynchronously to populate the content
-                fetchAndUpdateContent(pageUrl, initialData);
-            }
-            
-            // Set up search debounce
-            setupSearchDebounce();
-            
-        } catch (error) {
-            console.error('Error building search index:', error);
-            // Display error message in search results
-            searchResults.innerHTML = `<div class="search-error">Failed to load search index: ${error.message}</div>`;
-            searchResults.classList.add('active');
         }
+        
+        if (!sitemapData) {
+            const errorMsg = "Could not load sitemap.json from any of the attempted paths";
+            console.error(errorMsg);
+            searchResults.innerHTML = `<div class="search-error">${errorMsg}</div>`;
+            searchResults.classList.add('active');
+            return;
+        }
+        
+        // Set the base URL from the sitemap
+        siteBaseUrl = sitemapData.baseUrl;
+        console.log("Using base URL from sitemap:", siteBaseUrl);
+        
+        // Now that we have the base URL, fix links in the current page
+        fixPageLinks();
+        
+        console.log("Building search index using sitemap with", sitemapData.sitemap.length, "pages");
+        
+        // First, add all items directly from the sitemap
+        for (const page of sitemapData.sitemap) {
+            // Create initial placeholder entry with metadata from sitemap
+            const pageUrl = normalizeUrl(page.url);
+            
+            // Use whatever information we have from the sitemap
+            const initialData = {
+                title: page.title || getFileNameFromUrl(page.url),
+                content: '',  // Will be populated after fetching
+                preview: 'Loading content...',
+                url: pageUrl,
+                type: page.badge || 'page',
+                relPath: page.url
+            };
+            
+            // Add to search index immediately so we have basic search functionality
+            searchData.push(initialData);
+            
+            // Fetch the HTML asynchronously to populate the content
+            fetchAndUpdateContent(pageUrl, initialData);
+        }
+        
+        // Set up search debounce
+        setupSearchDebounce();
     }
     
     // Extract a filename from a URL for a default title
