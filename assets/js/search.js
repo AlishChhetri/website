@@ -28,18 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to normalize a URL with the correct base path
     function normalizeUrl(url) {
-        // If it's already an absolute URL, return it
+        // If it's already an absolute URL with http/https, return it
         if (url.startsWith('http')) {
             return url;
         }
         
-        // Ensure URL starts with a slash
-        if (!url.startsWith('/')) {
-            url = '/' + url;
+        // Handle absolute paths within the site
+        if (url.startsWith('/')) {
+            // If it already includes the baseUrl, don't duplicate it
+            if (url.startsWith(baseUrl + '/') || url === baseUrl) {
+                return url;
+            }
+            return baseUrl + url;
         }
         
-        // Add the base URL
-        return baseUrl + url;
+        // Ensure relative URLs have a leading slash
+        return baseUrl + '/' + url;
     }
     
     // Function to fetch HTML content from a URL
@@ -48,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Make sure we use the correct base URL
             const normalizedUrl = url.startsWith('http') ? url : new URL(normalizeUrl(url), window.location.origin).href;
             
+            console.log("Fetching:", normalizedUrl);
             const response = await fetch(normalizedUrl);
             if (!response.ok) {
                 throw new Error(`Failed to fetch ${normalizedUrl}: ${response.status}`);
