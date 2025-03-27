@@ -4,27 +4,27 @@
 /* ---------- ROOT VARIABLES ---------- */
 :root {
     /* Base colors */
-    --accent-color: #FEDA48;
+    --accent-color: #ffc62a;
     --secondary-color: #1B3054;
     --bg-color: #ffffff;
     --text-color: #050505;
     --text-color-secondary: rgba(5, 5, 5, 0.6);
-    
+
     /* Typography */
     --font-primary: 'Merriweather Sans', sans-serif;
     --font-heading: 'Archivo Black', sans-serif;
-    
+
     /* Layout */
     --padding-page: 30px;
     --border-radius: 8px;
 
     /* Transitions */
-    --transition-duration: 0.4s;
-    --transition-timing: ease;
+    --transition: 0.3s ease;
 }
 
 /* ---------- GLOBAL STYLES ---------- */
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     display: flex;
@@ -38,6 +38,7 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    transition: background-color var(--transition), color var(--transition);
 }
 
 /* ---------- NAVBAR SECTION ---------- */
@@ -68,8 +69,15 @@ body {
 }
 
 @keyframes wobble {
-    0%, 100% { transform: rotate(-10deg); }
-    50% { transform: rotate(10deg); }
+
+    0%,
+    100% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
 }
 
 /* Nav Links */
@@ -87,8 +95,8 @@ body {
     font-weight: 600;
     padding: 8px 16px;
     border-radius: var(--border-radius);
-    transition: background-color var(--transition-duration) var(--transition-timing),
-                transform var(--transition-duration) var(--transition-timing);
+    transition: background-color var(--transition),
+        transform var(--transition);
 }
 
 .nav-link:hover {
@@ -115,7 +123,7 @@ body {
     outline: none;
     background-color: var(--bg-color);
     color: var(--text-color);
-    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    transition: border-color var(--transition), background-color var(--transition), color var(--transition);
 }
 
 /* Search Results */
@@ -134,7 +142,7 @@ body {
     max-height: 400px;
     overflow-y: auto;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .search-results.active {
@@ -143,8 +151,15 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .search-results-header {
@@ -153,7 +168,7 @@ body {
     color: var(--text-color-secondary);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 8px;
-    transition: border-color 0.3s ease, color 0.3s ease;
+    transition: border-color var(--transition), color var(--transition);
 }
 
 .search-result-item {
@@ -163,7 +178,7 @@ body {
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.1);
     background-color: var(--bg-color);
-    transition: background-color 0.3s ease, border-left-color 0.3s ease;
+    transition: background-color var(--transition), border-left-color var(--transition);
 }
 
 .search-result-item:hover,
@@ -194,7 +209,7 @@ body {
     font-weight: bold;
     margin-bottom: 5px;
     text-transform: uppercase;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color var(--transition), color var(--transition);
     letter-spacing: 0.03em;
 }
 
@@ -253,7 +268,7 @@ body {
     padding: 0 2px;
     border-radius: 2px;
     font-weight: 500;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition);
 }
 
 .search-results::-webkit-scrollbar {
@@ -267,7 +282,7 @@ body {
 .search-results::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition);
 }
 
 .search-result-item .highlight {
@@ -305,7 +320,7 @@ body {
     background-color: var(--background);
     border-radius: 30px;
     border: 2px solid var(--text-color);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color var(--transition), border-color var(--transition);
 }
 
 .slider:before {
@@ -318,14 +333,14 @@ body {
     bottom: 10%;
     background-color: transparent;
     box-shadow: inset 6px -4px 0px 0px var(--text-color);
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: transform var(--transition), background-color var(--transition), box-shadow var(--transition);
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: #1B305400;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(120%);
     background-color: var(--text-color);
     box-shadow: inset 0px 0px 0px 0px var(--text-color);
@@ -415,7 +430,7 @@ input:checked + .slider:before {
     z-index: 1;
     opacity: 1;
     inset: -8px;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition);
 }
 
 .hero-image img {
@@ -424,7 +439,7 @@ input:checked + .slider:before {
     height: 100%;
     object-fit: cover;
     filter: grayscale(100%);
-    transition: filter 0.3s ease, transform 0.3s ease;
+    transition: filter var(--transition), transform var(--transition);
     z-index: 2;
     clip-path: polygon(-50% 50%, 50% 100%, 150% 50%, 50% 0);
     transform-origin: center;
@@ -440,12 +455,13 @@ input:checked + .slider:before {
     gap: 1rem;
 }
 
-.cta-primary, .cta-secondary {
+.cta-primary,
+.cta-secondary {
     padding: 12px 24px;
     border-radius: var(--border-radius);
     font-weight: 600;
     text-decoration: none;
-    transition: transform var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition);
 }
 
 .cta-primary {
@@ -458,7 +474,8 @@ input:checked + .slider:before {
     color: var(--text-color);
 }
 
-.cta-primary:hover, .cta-secondary:hover {
+.cta-primary:hover,
+.cta-secondary:hover {
     transform: translateY(-2px);
 }
 
@@ -467,7 +484,7 @@ input:checked + .slider:before {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
-    transition: transform var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition);
 }
 
 .resume-link:hover {
@@ -506,7 +523,8 @@ input:checked + .slider:before {
 }
 
 /* Base hexagon styling */
-.hexagon-center, .hexagon-sub {
+.hexagon-center,
+.hexagon-sub {
     position: absolute;
     width: 180px;
     height: 156px;
@@ -514,7 +532,7 @@ input:checked + .slider:before {
     justify-content: center;
     align-items: center;
     transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0),
-                z-index 0s;
+        z-index 0s;
     cursor: pointer;
     pointer-events: none;
 }
@@ -530,8 +548,8 @@ input:checked + .slider:before {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0), 
-                opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0),
+        opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
     z-index: 0;
     cursor: pointer;
 }
@@ -580,7 +598,7 @@ input:checked + .slider:before {
 
 /* Text styling for all hexagons */
 .hexagon-text {
-    color: var(--text-color);
+    color: #000;
     font-weight: 700;
     text-align: center;
     z-index: 1;
@@ -592,75 +610,79 @@ input:checked + .slider:before {
     font-size: 1.2rem;
     line-height: 1.2;
     margin: 0;
-    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
     max-height: 80%;
     overflow: hidden;
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
     cursor: pointer;
     pointer-events: auto;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    transition: color var(--transition), text-shadow var(--transition);
 }
 
 /* Center hexagon text */
 .hexagon-center .hexagon-text {
-    font-size: 1.6rem;
-    color: var(--secondary-color);
+    font-size: 2rem;
     font-weight: 800;
     width: 70%;
 }
 
 /* Hexagon positions */
-.hexagon-sub-1 { 
-    --hex-translate-x: -140%; 
+.hexagon-sub-1 {
+    --hex-translate-x: -140%;
     --hex-translate-y: -80%;
-    transform: translate(-140%, -80%); 
+    transform: translate(-140%, -80%);
 }
-.hexagon-sub-2 { 
-    --hex-translate-x: 0; 
+
+.hexagon-sub-2 {
+    --hex-translate-x: 0;
     --hex-translate-y: -160%;
-    transform: translate(0, -160%); 
+    transform: translate(0, -160%);
 }
-.hexagon-sub-3 { 
-    --hex-translate-x: 140%; 
+
+.hexagon-sub-3 {
+    --hex-translate-x: 140%;
     --hex-translate-y: -80%;
-    transform: translate(140%, -80%); 
+    transform: translate(140%, -80%);
 }
-.hexagon-sub-4 { 
-    --hex-translate-x: 140%; 
+
+.hexagon-sub-4 {
+    --hex-translate-x: 140%;
     --hex-translate-y: 80%;
-    transform: translate(140%, 80%); 
+    transform: translate(140%, 80%);
 }
-.hexagon-sub-5 { 
-    --hex-translate-x: 0; 
+
+.hexagon-sub-5 {
+    --hex-translate-x: 0;
     --hex-translate-y: 160%;
-    transform: translate(0, 160%); 
+    transform: translate(0, 160%);
 }
-.hexagon-sub-6 { 
-    --hex-translate-x: -140%; 
+
+.hexagon-sub-6 {
+    --hex-translate-x: -140%;
     --hex-translate-y: 80%;
-    transform: translate(-140%, 80%); 
+    transform: translate(-140%, 80%);
 }
 
 /* Hexagon animations */
 .hexagon-sub.coming-in {
     transform: translate(0, 0) !important;
     z-index: 0;
-    transition: all 0.2s ease;
+    transition: var(--transition);
 }
 
 .hexagon-sub.going-out {
     transform: translate(var(--hex-translate-x, 0), var(--hex-translate-y, 0)) scale(0.9) !important;
     z-index: 1;
-    transition: all 0.2s ease;
+    transition: var(--transition);
 }
 
 .hexagon-center.animating .hexagon-text {
     transform: scale(0.9);
-    transition: transform 0.2s ease;
+    transition: transform var(--transition);
 }
 
 .hexagon-center:not(.animating) .hexagon-text {
     transform: scale(1);
-    transition: transform 0.2s ease;
+    transition: transform var(--transition);
 }
 
 /* Animation states */
@@ -698,17 +720,6 @@ input:checked + .slider:before {
     transform: scale(1);
 }
 
-/* Legacy animation classes - replaced by state classes */
-.hexagon-sub.coming-in,
-.hexagon-sub.going-out {
-    transition: none;
-}
-
-.hexagon-center.animating,
-.hexagon-center:not(.animating) {
-    transition: none;
-}
-
 /* Make empty hexagons not clickable */
 .hexagon-sub.empty .hexagon-text {
     cursor: default;
@@ -725,6 +736,7 @@ input:checked + .slider:before {
     font-size: 2.5rem;
     margin-bottom: 3rem;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 .portfolio-list {
@@ -753,7 +765,7 @@ input:checked + .slider:before {
     object-fit: contain;
     border-radius: var(--border-radius);
     border: 3px solid var(--text-color);
-    transition: transform var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
     box-shadow: -8px 8px 0px var(--text-color);
 }
 
@@ -771,12 +783,14 @@ input:checked + .slider:before {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 .portfolio-content h3 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 .portfolio-content p {
@@ -784,6 +798,7 @@ input:checked + .slider:before {
     color: var(--text-color-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
+    transition: color var(--transition);
 }
 
 .portfolio-link {
@@ -791,7 +806,7 @@ input:checked + .slider:before {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
-    transition: transform var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition), color var(--transition);
 }
 
 .portfolio-link:hover {
@@ -817,8 +832,9 @@ footer {
     width: 36px;
     height: 36px;
     opacity: 0.7;
-    transition: transform var(--transition-duration) var(--transition-timing),
-                opacity var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition),
+        opacity var(--transition),
+        filter var(--transition);
 }
 
 .footer-image:hover {
@@ -854,13 +870,13 @@ footer {
     object-fit: contain;
     border-radius: var(--border-radius);
     border: 3px solid var(--text-color);
-    transition: transform var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
     box-shadow: 8px 8px 0px var(--text-color);
 }
 
 .blog-image img:hover {
     transform: translate(-4px, -4px);
-    box-shadow: 12px 12px 0px var(--text-color);
+    box-shadow: 12px 12px 0px var (--text-color);
 }
 
 .blog-content {
@@ -872,12 +888,14 @@ footer {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 .blog-content h3 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 .blog-content p {
@@ -885,6 +903,7 @@ footer {
     color: var(--text-color-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
+    transition: color var(--transition);
 }
 
 .blog-link {
@@ -892,7 +911,7 @@ footer {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
-    transition: transform var(--transition-duration) var(--transition-timing);
+    transition: transform var(--transition), color var(--transition);
 }
 
 .blog-link:hover {
@@ -904,6 +923,7 @@ footer {
     color: var(--text-color-secondary);
     margin-bottom: 0.5rem;
     font-style: italic;
+    transition: color var(--transition);
 }
 
 /* ---------- CURSOR TRAIL SECTION ---------- */
@@ -914,6 +934,7 @@ footer {
     border-radius: 3px;
     background-color: #f0b85f;
     pointer-events: none;
+    transition: background-color var(--transition);
 }
 
 /* ---------- BASE PAGE TEMPLATE ---------- */
@@ -933,6 +954,7 @@ footer {
     font-size: 3.2rem;
     margin-bottom: 0.9375rem;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 .base-header h2 {
@@ -941,6 +963,7 @@ footer {
     color: var(--text-color);
     max-width: 80%;
     margin: 0 auto;
+    transition: color var(--transition);
 }
 
 .base-section {
@@ -952,13 +975,14 @@ footer {
     font-size: 1.8rem;
     position: relative;
     padding-bottom: 0.625rem;
-    transition: color 0.0s ease;
+    transition: color var(--transition);
 }
 
 .base-section p {
     margin-bottom: 1.25rem;
     line-height: 1.7;
     color: var(--text-color);
+    transition: color var(--transition);
 }
 
 /* ---------- DARK MODE STYLES ---------- */
@@ -972,7 +996,6 @@ body.dark-mode {
     --border-color: rgba(255, 255, 255, 0.1);
     --highlight-bg: rgba(255, 200, 48, 0.05);
     --scrollbar-thumb: rgba(255, 255, 255, 0.15);
-    --hexagon-text-shadow: rgba(0, 0, 0, 0.7);
     --hero-image-bg: #855913;
     --cursor-trail: #d9a44e;
 }
@@ -1017,7 +1040,7 @@ body.dark-mode .search-result-item.active {
 }
 
 body.dark-mode .search-result-item p {
-    color: var(--text-color-secondary);
+    color: var (--text-color-secondary);
 }
 
 body.dark-mode .highlight {
@@ -1049,7 +1072,7 @@ body.dark-mode .slider:before {
     box-shadow: inset 6px -4px 0px 0px var(--text-color);
 }
 
-body.dark-mode input:checked + .slider:before {
+body.dark-mode input:checked+.slider:before {
     background-color: var(--text-color);
 }
 
@@ -1070,16 +1093,6 @@ body.dark-mode .hero-content p {
 
 body.dark-mode .hero-image::before {
     background: var(--hero-image-bg);
-}
-
-/* ---------- HEXAGON NAVIGATION DARK MODE ---------- */
-body.dark-mode .hexagon-text {
-    color: var(--text-color);
-    text-shadow: 0px 0px 5px var(--hexagon-text-shadow);
-}
-
-body.dark-mode .hexagon-center .hexagon-text {
-    color: var(--accent-color);
 }
 
 /* ---------- PORTFOLIO SECTION DARK MODE ---------- */
@@ -1164,13 +1177,4 @@ body.dark-mode .footer-image {
 
 body.dark-mode .footer-image:hover {
     opacity: 1;
-}
-
-/* ---------- RESPONSIVE DARK MODE ADJUSTMENTS ---------- */
-@media (max-width: 768px) {
-    body.dark-mode .hero-content {
-        background-color: rgba(18, 18, 18, 0.7);
-        padding: 1.5rem;
-        border-radius: var(--border-radius);
-    }
 }
