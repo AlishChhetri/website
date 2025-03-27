@@ -247,6 +247,7 @@ body {
     transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0),
                 z-index 0s;
     cursor: pointer;
+    pointer-events: none; /* Make the container div not receive clicks */
 }
 
 /* Hexagon SVG background */
@@ -262,6 +263,9 @@ body {
     background-repeat: no-repeat;
     transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0), 
                 opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    /* Make the SVG background clickable */
+    z-index: 0;
+    cursor: pointer;
 }
 
 /* Center hexagon specific styling */
@@ -285,12 +289,12 @@ body {
 /* Sub hexagon specific styling */
 .hexagon-sub {
     z-index: 1;
-    width: 120px;  /* Increased from 100px */
-    height: 120px; /* Increased from 100px */
+    width: 120px;
+    height: 120px;
 }
 
 .hexagon-sub .hexagon-svg {
-    background-image: url('../images/empty_honeycomb.svg'); /* Default to empty */
+    background-image: url('../images/empty_honeycomb.svg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -311,7 +315,7 @@ body {
     color: var(--text-color);
     font-weight: 700;
     text-align: center;
-    z-index: 1;
+    z-index: 1; /* Ensure text is above SVG for clickability */
     width: 75%;
     padding: 0.5rem;
     display: flex;
@@ -324,6 +328,8 @@ body {
     max-height: 80%;
     overflow: hidden;
     text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    pointer-events: auto; /* Ensure text is clickable */
 }
 
 /* Center hexagon text */
@@ -453,6 +459,12 @@ body {
 .hexagon-center:not(.animating) {
     /* Remove these styles as they'll be replaced by the state classes */
     transition: none;
+}
+
+/* Make empty hexagons not clickable */
+.hexagon-sub.empty .hexagon-text {
+    cursor: default;
+    pointer-events: none;
 }
 
 /* ---------- BASE PAGE TEMPLATE ---------- */

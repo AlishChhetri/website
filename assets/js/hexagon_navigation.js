@@ -29,17 +29,44 @@ class HexagonNavigation {
             
             // Add event listeners to hexagons
             this.subHexagons.forEach((hex, index) => {
-                hex.addEventListener('click', (event) => {
+                // Get the SVG element inside the hexagon for precise click detection
+                const hexSvg = hex.querySelector('.hexagon-svg');
+                
+                // Add click event to the SVG element instead of the entire div
+                hexSvg.addEventListener('click', (event) => {
                     if (!this.isAnimating) {
                         this.handleHexagonClick(index, event);
                     }
+                    // Prevent event from bubbling to parent elements
+                    event.stopPropagation();
+                });
+                
+                // Add click event to the text element if it's not empty
+                const textElement = hex.querySelector('.hexagon-text');
+                textElement.addEventListener('click', (event) => {
+                    if (!this.isAnimating && textElement.textContent.trim() !== '') {
+                        this.handleHexagonClick(index, event);
+                    }
+                    // Prevent event from bubbling to parent elements
+                    event.stopPropagation();
                 });
             });
 
-            this.centerHex.addEventListener('click', () => {
+            // Add click event to center hexagon SVG and text
+            const centerHexSvg = this.centerHex.querySelector('.hexagon-svg');
+            centerHexSvg.addEventListener('click', (event) => {
                 if (!this.isAnimating && this.navigationData[this.currentSection].parent) {
                     this.navigateBack();
                 }
+                event.stopPropagation();
+            });
+            
+            const centerText = this.centerHex.querySelector('.hexagon-text');
+            centerText.addEventListener('click', (event) => {
+                if (!this.isAnimating && this.navigationData[this.currentSection].parent) {
+                    this.navigateBack();
+                }
+                event.stopPropagation();
             });
             
             // Set initial state class
@@ -88,6 +115,9 @@ class HexagonNavigation {
         if (clickedItem.path.includes('.html')) {
             // It's a page link
             window.location.href = clickedItem.path;
+        } else if (clickedItem.type === 'download') {
+            // It's a download
+            this.downloadFile(clickedItem.path);
         } else {
             // It's a directory/section
             event.preventDefault();
