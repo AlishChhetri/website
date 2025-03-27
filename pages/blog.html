@@ -17,58 +17,68 @@
     <nav class="navbar">
         <div class="logo">
             <a href="../index.html">
-                <!-- <img src="path/to/image" alt="Logo" class="logo-img"> -->
-                <div class="logo-text">AC</div>
+                <img src="../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
             </a>
         </div>
 
         <!-- nav-links section -->
         <div class="nav-links">
-            <a href="about.html" class="nav-link">About</a>
-            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="../pages/about.html" class="nav-link">About</a>
+            <a href="../pages/blog.html" class="nav-link">Blog</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
     </nav>
 
-    <main>
-        <div class="base-body">
-            <div class="base-header">
-                <h1>Blog</h1>
-                <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
-            </div>
-            <!-- blog Section -->
-            <section class="blog">
-                <h2 class="blog-title">Blog Posts</h2>
-                <div class="blog-list">
-                    <!-- blog Item 1 -->
-                    <div class="blog-container">
-                        <div class="blog-image">
-                            <img src="../assets/images/placeholder_profile_picture.png" alt="blog Post 1">
-                        </div>
-                        <div class="blog-content">
-                            <h3>Post 1</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua.</p>
-                            <a href="/pages/blog/post_one.html" class="blog-link">View Post →</a>
-                        </div>
-                    </div>
 
-                    <!-- blog Item 2 -->
-                    <div class="blog-container">
-                        <div class="blog-image">
-                            <img src="../assets/images/placeholder_profile_picture.png" alt="blog Post 2">
-                        </div>
-                        <div class="blog-content">
-                            <h3>Post 2</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua.</p>
-                            <a href="pages/blog/post_two.html" class="blog-link">View Post →</a>
-                        </div>
+    <div class="base-body">
+        <div class="base-header">
+            <h1>Blog</h1>
+            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
+        </div>
+        <!-- Blog Section -->
+        <section class="blog">
+            <h2 class="blog-title">Posts</h2>
+            <div class="blog-list">
+                <!-- Blog Item 1 -->
+                <div class="blog-container">
+                    <div class="blog-image">
+                        <img src="../assets/images/placeholder_profile_picture.png" alt="Blog Post 1">
+                    </div>
+                    <div class="blog-content">
+                        <h3>Post 1</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
+                        <a href="/pages/blog/post_one.html" class="blog-link">View Post →</a>
                     </div>
                 </div>
-            </section>
-        </div>
-    </main>
 
+                <!-- Blog Item 2 -->
+                <div class="blog-container">
+                    <div class="blog-image">
+                        <img src="../assets/images/placeholder_profile_picture.png" alt="Blog Post 2">
+                    </div>
+                    <div class="blog-content">
+                        <h3>Post 2</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
+                        <a href="pages/blog/post_two.html" class="blog-link">View Post →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     <footer class="footer">
         <div class="footer-content">
             <a href="https://gmail.com" target="_blank" title="Email">
@@ -83,6 +93,12 @@
             </a>
         </div>
     </footer>
+    <script src="../assets/js/hexagon_background.js"></script>
+    <script src="../assets/js/hello.js"></script>
+    <script src="../assets/js/cursor.js"></script>
+    <script src="../assets/js/search.js"></script>
+    <script src="../assets/js/theme_toggle.js"></script>
+    <script src="../assets/js/hexagon_navigation.js"></script>
 </body>
 
 </html>

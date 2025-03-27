@@ -736,7 +736,6 @@ input:checked+.slider:before {
     font-size: 2.5rem;
     margin-bottom: 3rem;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 .portfolio-list {
@@ -783,14 +782,12 @@ input:checked+.slider:before {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 .portfolio-content h3 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 .portfolio-content p {
@@ -798,7 +795,6 @@ input:checked+.slider:before {
     color: var(--text-color-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
-    transition: color var(--transition);
 }
 
 .portfolio-link {
@@ -843,6 +839,16 @@ footer {
 }
 
 /* ---------- BLOG SECTION ---------- */
+.blog {
+    padding: 4rem var(--padding-page);
+    background-color: transparent;
+}
+
+.blog-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
 
 .blog-list {
     display: flex;
@@ -871,12 +877,12 @@ footer {
     border-radius: var(--border-radius);
     border: 3px solid var(--text-color);
     transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
-    box-shadow: 8px 8px 0px var(--text-color);
+    box-shadow: -8px 8px 0px var(--text-color);
 }
 
 .blog-image img:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 12px 12px 0px var (--text-color);
+    transform: translate(4px, -4px);
+    box-shadow: -12px 12px 0px var(--text-color);
 }
 
 .blog-content {
@@ -888,14 +894,12 @@ footer {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 .blog-content h3 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 .blog-content p {
@@ -903,7 +907,6 @@ footer {
     color: var(--text-color-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
-    transition: color var(--transition);
 }
 
 .blog-link {
@@ -915,15 +918,7 @@ footer {
 }
 
 .blog-link:hover {
-    transform: translateX(-4px);
-}
-
-.blog-date {
-    font-size: 0.9rem;
-    color: var(--text-color-secondary);
-    margin-bottom: 0.5rem;
-    font-style: italic;
-    transition: color var(--transition);
+    transform: translateX(4px);
 }
 
 /* ---------- CURSOR TRAIL SECTION ---------- */
@@ -940,8 +935,7 @@ footer {
 /* ---------- BASE PAGE TEMPLATE ---------- */
 .base-body {
     max-width: 75%;
-    margin: 2.5rem auto;
-    padding: 0 5%;
+    margin: 0 auto;
 }
 
 .base-header {
@@ -954,7 +948,6 @@ footer {
     font-size: 3.2rem;
     margin-bottom: 0.9375rem;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 .base-header h2 {
@@ -963,7 +956,6 @@ footer {
     color: var(--text-color);
     max-width: 80%;
     margin: 0 auto;
-    transition: color var(--transition);
 }
 
 .base-section {
@@ -975,14 +967,12 @@ footer {
     font-size: 1.8rem;
     position: relative;
     padding-bottom: 0.625rem;
-    transition: color var(--transition);
 }
 
 .base-section p {
     margin-bottom: 1.25rem;
     line-height: 1.7;
     color: var(--text-color);
-    transition: color var(--transition);
 }
 
 /* ---------- DARK MODE STYLES ---------- */
