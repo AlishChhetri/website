@@ -962,25 +962,215 @@ footer {
 }
 
 /* ---------- DARK MODE STYLES ---------- */
-body.dark-mode .search-results {
+/* Dark Mode Root Variables */
+
+body.dark-mode {
+    --bg-color: #222222;
+    --text-color: #e0e0e0;
+    --text-color-secondary: rgba(224, 224, 224, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --highlight-bg: rgba(255, 200, 48, 0.05);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+    --hexagon-text-shadow: rgba(0, 0, 0, 0.7);
+    --hero-image-bg: #855913;
+    --cursor-trail: #d9a44e;
+}
+
+/* ---------- GLOBAL DARK MODE OVERRIDES ---------- */
+body.dark-mode {
     background-color: var(--bg-color);
     color: var(--text-color);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- NAVBAR DARK MODE ---------- */
+body.dark-mode .nav-link {
+    color: var(--text-color);
+}
+
+body.dark-mode .search-container input {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* ---------- SEARCH RESULTS DARK MODE ---------- */
+body.dark-mode .search-results {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 body.dark-mode .search-results-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+body.dark-mode .search-result-item {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
 }
 
 body.dark-mode .search-result-item:hover,
 body.dark-mode .search-result-item.active {
-    background-color: rgba(255, 200, 48, 0.05);
+    background-color: var(--highlight-bg);
 }
 
 body.dark-mode .search-result-item p {
+    color: var(--text-color-secondary);
+}
+
+body.dark-mode .highlight {
+    background-color: rgba(255, 200, 48, 0.25);
+}
+
+body.dark-mode .search-result-item .highlight {
+    background-color: rgba(255, 200, 48, 0.4);
+}
+
+body.dark-mode .no-results {
+    color: var(--text-color-secondary);
+}
+
+body.dark-mode .search-results::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+body.dark-mode .search-results::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+}
+
+/* ---------- DARK MODE TOGGLE ---------- */
+body.dark-mode .slider {
+    border-color: var(--text-color);
+}
+
+body.dark-mode .slider:before {
+    box-shadow: inset 6px -4px 0px 0px var(--text-color);
+}
+
+body.dark-mode input:checked + .slider:before {
+    background-color: var(--text-color);
+}
+
+/* ---------- HERO SECTION DARK MODE ---------- */
+body.dark-mode .hero-content h1,
+body.dark-mode .hero-content h2,
+body.dark-mode .hero-content h3 {
     color: var(--text-color);
 }
 
+body.dark-mode .hero-content .full-name {
+    color: var(--accent-color);
+}
+
+body.dark-mode .hero-content p {
+    color: var(--text-color-secondary);
+}
+
+body.dark-mode .hero-image::before {
+    background: var(--hero-image-bg);
+}
+
+/* ---------- HEXAGON NAVIGATION DARK MODE ---------- */
+body.dark-mode .hexagon-text {
+    color: var(--text-color);
+    text-shadow: 0px 0px 5px var(--hexagon-text-shadow);
+}
+
+body.dark-mode .hexagon-center .hexagon-text {
+    color: var(--accent-color);
+}
+
+/* ---------- PORTFOLIO SECTION DARK MODE ---------- */
+body.dark-mode .portfolio-title {
+    color: var(--text-color);
+}
+
+body.dark-mode .portfolio-image img {
+    border-color: var(--text-color);
+    box-shadow: -8px 8px 0px var(--text-color);
+}
+
+body.dark-mode .portfolio-content h2,
+body.dark-mode .portfolio-content h3 {
+    color: var(--text-color);
+}
+
+body.dark-mode .portfolio-content p {
+    color: var(--text-color-secondary);
+}
+
+body.dark-mode .portfolio-link {
+    color: var(--accent-color);
+}
+
+/* ---------- BLOG SECTION DARK MODE ---------- */
+body.dark-mode .blog-image img {
+    border-color: var(--text-color);
+    box-shadow: 8px 8px 0px var(--text-color);
+}
+
+body.dark-mode .blog-content h2,
+body.dark-mode .blog-content h3 {
+    color: var(--text-color);
+}
+
+body.dark-mode .blog-content p {
+    color: var(--text-color-secondary);
+}
+
+body.dark-mode .blog-link {
+    color: var(--accent-color);
+}
+
+body.dark-mode .blog-date {
+    color: var(--text-color-secondary);
+}
+
+/* ---------- CURSOR TRAIL DARK MODE ---------- */
+body.dark-mode .bee-trail {
+    background-color: var(--cursor-trail);
+}
+
+/* ---------- BASE PAGE TEMPLATE DARK MODE ---------- */
+body.dark-mode .base-header h1 {
+    color: var(--text-color);
+}
+
+body.dark-mode .base-header h2 {
+    color: var(--text-color-secondary);
+}
+
+body.dark-mode .base-section h3 {
+    color: var(--text-color);
+}
+
+body.dark-mode .base-section p {
+    color: var(--text-color-secondary);
+}
+
+/* ---------- BADGE TYPES DARK MODE ---------- */
 body.dark-mode .result-type-badge {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
+
+/* ---------- FOOTER DARK MODE ---------- */
+body.dark-mode .footer-image {
+    filter: brightness(0.9) invert(1);
+    opacity: 0.7;
+}
+
+body.dark-mode .footer-image:hover {
+    opacity: 1;
+}
+
+/* ---------- RESPONSIVE DARK MODE ADJUSTMENTS ---------- */
+@media (max-width: 768px) {
+    body.dark-mode .hero-content {
+        background-color: rgba(18, 18, 18, 0.7);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+    }
 }
