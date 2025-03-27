@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchResults = document.getElementById('searchResults');
     
     // Explicitly set the full base URL for GitHub Pages deployment
-    const fullBaseUrl = 'https://alishchhetri.github.io/website';
-    const baseUrl = '/website';
+    const fullBaseUrl = 'https://alishchhetri.github.io/website/';
+    const baseUrl = '/website/';
     
     // Function to determine the current hostname and protocol
     function getOriginUrl() {
