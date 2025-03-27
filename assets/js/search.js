@@ -4,12 +4,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-container input');
     const searchResults = document.getElementById('searchResults');
     
+    // Detect base URL for GitHub Pages deployment
+    const baseUrl = getBaseUrl();
+    
+    // Function to determine the base URL of the site
+    function getBaseUrl() {
+        // Check if we're on GitHub Pages with a repo name in the path
+        const currentUrl = window.location.href;
+        const ghPagesMatch = currentUrl.match(/https?:\/\/[^\/]+\/([^\/]+)\//);
+        
+        if (ghPagesMatch && ghPagesMatch[1] !== 'pages') {
+            return '/' + ghPagesMatch[1];
+        }
+        
+        // Default case for localhost or custom domain
+        return '';
+    }
+    
+    // Function to normalize a URL with the correct base path
+    function normalizeUrl(url) {
+        // If it's already an absolute URL, return it
+        if (url.startsWith('http')) {
+            return url;
+        }
+        
+        // Ensure URL starts with a slash
+        if (!url.startsWith('/')) {
+            url = '/' + url;
+        }
+        
+        // Add the base URL
+        return baseUrl + url;
+    }
+    
     // Function to fetch HTML content from a URL
     async function fetchContent(url) {
         try {
-            const response = await fetch(url);
+            // Make sure we use the correct base URL
+            const normalizedUrl = url.startsWith('http') ? url : new URL(normalizeUrl(url), window.location.origin).href;
+            
+            const response = await fetch(normalizedUrl);
             if (!response.ok) {
-                throw new Error(`Failed to fetch ${url}: ${response.status}`);
+                throw new Error(`Failed to fetch ${normalizedUrl}: ${response.status}`);
             }
             return await response.text();
         } catch (error) {
@@ -134,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function discoverPagesWithPattern() {
         const knownPages = new Set();
         
-        // Base directories to explore
+        // Base directories to explore with base URL
         const baseDirectories = [
             '/',
             '/pages/',
@@ -189,7 +225,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Try each variation
             for (const path of patternVariations) {
                 try {
-                    const response = await fetch(new URL(path, window.location.origin).href, {method: 'HEAD'});
+                    const normalizedPath = normalizeUrl(path);
+                    const response = await fetch(new URL(normalizedPath, window.location.origin).href, {method: 'HEAD'});
                     if (response.ok) {
                         knownPages.add(path);
                     }
@@ -249,7 +286,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (scannedPages.has(pagePath)) continue;
                 
                 try {
-                    const absolutePath = new URL(pagePath, window.location.origin).href;
+                    const normalizedPath = normalizeUrl(pagePath);
+                    const absolutePath = new URL(normalizedPath, window.location.origin).href;
                     const html = await fetchContent(absolutePath);
                     scannedPages.add(pagePath);
                     
@@ -323,6 +361,8 @@ document.addEventListener('DOMContentLoaded', function() {
         searchData.length = 0; // Clear existing data
         
         try {
+            console.log("Using base URL:", baseUrl);
+            
             // First, discover pages based on patterns
             const patternPages = await discoverPagesWithPattern();
             console.log("Pages discovered by pattern:", patternPages.size);
@@ -334,11 +374,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Crawl each page for search indexing
             for (const pagePath of allPages) {
                 try {
-                    const absolutePath = new URL(pagePath, window.location.origin).href;
+                    const normalizedPath = normalizeUrl(pagePath);
+                    const absolutePath = new URL(normalizedPath, window.location.origin).href;
                     const html = await fetchContent(absolutePath);
                     
                     if (html) {
                         const pageData = extractContent(html, pagePath);
+                        // Store the normalized URL path for navigation
+                        pageData.url = normalizedPath;
                         searchData.push(pageData);
                     }
                 } catch (error) {
@@ -534,7 +577,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     preview.innerHTML = highlightText(result.preview, query);
                     resultItem.appendChild(preview);
                     
-                    // Make clickable
+                    // Make clickable with proper URL handling
                     resultItem.addEventListener('click', () => {
                         if (result.type === 'navigation') {
                             // Find and click the hexagon
@@ -548,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 }
                             });
                         } else {
-                            // Navigate to the page
+                            // Navigate to the page with proper base URL handling
                             window.location.href = result.url;
                         }
                     });
