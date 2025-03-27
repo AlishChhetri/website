@@ -6,6 +6,7 @@ class HexagonNavigation {
         this.currentSection = 'main';
         this.isAnimating = false;
         this.navigationData = null;
+        this.baseUrl = ''; // Add base URL property
 
         // Set all sub-hexagons to empty by default - ONLY CLASS STATE, NOT DIRECT STYLING
         this.subHexagons.forEach(hex => {
@@ -17,12 +18,26 @@ class HexagonNavigation {
 
     async init() {
         try {
-            // Fetch the navigation data from the pages.json file
-            const response = await fetch('./assets/js/pages.json');
+            // Get the navigation data file path
+            const dataPath = this.getNavigationDataPath();
+            console.log("Attempting to load navigation data from:", dataPath);
+            
+            // Fetch the navigation data
+            const response = await fetch(dataPath);
             if (!response.ok) {
-                throw new Error(`Failed to fetch pages.json: ${response.status}`);
+                throw new Error(`Failed to fetch navigation data: ${response.status}`);
             }
-            this.navigationData = await response.json();
+            
+            const data = await response.json();
+            this.navigationData = data;
+            
+            // Set the base URL from the data if it exists
+            if (data.baseUrl) {
+                this.baseUrl = data.baseUrl;
+                console.log("Using base URL from navigation data:", this.baseUrl);
+            }
+            
+            console.log("Successfully loaded navigation data");
             
             // Initialize the content with the main section
             this.updateContent('main');
@@ -39,7 +54,7 @@ class HexagonNavigation {
 
             // Add click event to center hexagon (parent navigation)
             this.centerHex.addEventListener('click', (event) => {
-                if (!this.isAnimating && this.navigationData[this.currentSection].parent) {
+                if (!this.isAnimating && this.navigationData[this.currentSection]?.parent) {
                     this.navigateBack();
                 }
             });
@@ -52,29 +67,117 @@ class HexagonNavigation {
             
         } catch (error) {
             console.error('Error initializing hexagon navigation:', error);
-            // Fallback to hardcoded data if JSON fetch fails
-            this.loadFallbackData();
+            // Try alternative paths
+            this.tryAlternativeDataPaths();
         }
     }
 
+    getNavigationDataPath() {
+        // First, try to determine based on script location
+        const scripts = document.getElementsByTagName('script');
+        for (const script of scripts) {
+            const src = script.src;
+            if (src && src.includes('hexagon_navigation.js')) {
+                // If this is our script, the data should be in the same directory
+                return src.substring(0, src.lastIndexOf('/') + 1) + 'hexagon_navigation.json';
+            }
+        }
+
+        // Fallback: determine based on current page location
+        const currentPath = window.location.pathname;
+        
+        if (currentPath.includes('/pages/')) {
+            // In a subpage
+            const depth = currentPath.split('/').filter(Boolean).length - 1;
+            return '../'.repeat(depth) + 'assets/js/hexagon_navigation.json';
+        } else {
+            // In root
+            return './assets/js/hexagon_navigation.json';
+        }
+    }
+
+    async tryAlternativeDataPaths() {
+        // Try a series of alternative paths when the main approach fails
+        const possiblePaths = [
+            './assets/js/hexagon_navigation.json',
+            '../assets/js/hexagon_navigation.json',
+            '../../assets/js/hexagon_navigation.json',
+            '/assets/js/hexagon_navigation.json',
+            'hexagon_navigation.json'
+        ];
+        
+        for (const path of possiblePaths) {
+            try {
+                console.log("Trying alternative path:", path);
+                const response = await fetch(path);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    this.navigationData = data;
+                    
+                    // Set the base URL from the data if it exists
+                    if (data.baseUrl) {
+                        this.baseUrl = data.baseUrl;
+                        console.log("Using base URL from navigation data:", this.baseUrl);
+                    }
+                    
+                    console.log("Successfully loaded navigation data from:", path);
+                    
+                    // Initialize with loaded data
+                    this.updateContent('main');
+                    
+                    // Set initial state class
+                    this.centerHex.classList.add('state-idle');
+                    this.subHexagons.forEach(hex => {
+                        hex.classList.add('state-idle');
+                    });
+                    
+                    return; // Success, exit method
+                }
+            } catch (e) {
+                console.warn(`Failed to load from ${path}:`, e.message);
+            }
+        }
+        
+        // If all paths fail, fall back to hardcoded data
+        console.log("All paths failed, using fallback data");
+        this.loadFallbackData();
+    }
+
     loadFallbackData() {
-        // Fallback navigation data
+        // Fallback navigation data with baseUrl
         this.navigationData = {
+            baseUrl: window.location.origin + '/website',
             'main': {
                 center: 'Navigation',
                 parent: null,
                 subs: [
-                    { name: 'Projects', type: 'page', path: './pages/portfolio/project_one.html' },
-                    { name: 'About', type: 'page', path: './pages/about.html' },
+                    { name: 'Projects', type: 'page', path: '/pages/projects.html' },
+                    { name: 'About', type: 'page', path: '/pages/about.html' },
                     { name: 'Contact', type: 'directory', path: 'contact' },
-                    { name: 'Blog', type: 'page', path: './pages/blog.html' },
+                    { name: 'Blog', type: 'page', path: '/pages/blog.html' },
                     { name: 'Resources', type: 'directory', path: 'resources' },
-                    { name: 'Portfolio', type: 'page', path: './pages/portfolio.html' }
+                    { name: 'Portfolio', type: 'page', path: '/pages/portfolio.html' }
                 ]
             }
         };
         
+        // Set base URL from fallback data
+        this.baseUrl = this.navigationData.baseUrl;
+        console.log("Using fallback base URL:", this.baseUrl);
+        
         this.updateContent('main');
+    }
+
+    // Get current page path relative to site root (similar to search.js)
+    getCurrentPath() {
+        const path = window.location.pathname;
+        // If we're on GitHub Pages or similar hosting, handle the repository name in the path
+        const basePath = this.baseUrl ? new URL(this.baseUrl).pathname : '';
+        if (basePath && path.startsWith(basePath)) {
+            return path.substring(basePath.length) || '/';
+        }
+        return path;
     }
 
     handleHexagonClick(index, event) {
@@ -88,15 +191,55 @@ class HexagonNavigation {
 
         // Handle navigation based on path type
         if (clickedItem.path.includes('.html')) {
+            // Normalize the URL path based on current location
+            const normalizedPath = this.normalizePath(clickedItem.path);
+            
             // It's a page link
-            window.location.href = clickedItem.path;
+            window.location.href = normalizedPath;
         } else if (clickedItem.type === 'download') {
-            // It's a download
-            this.downloadFile(clickedItem.path);
+            // It's a download - normalize the download path
+            const normalizedPath = this.normalizePath(clickedItem.path);
+            this.downloadFile(normalizedPath);
         } else {
             // It's a directory/section
             event.preventDefault();
             this.changeSection(clickedItem.path);
+        }
+    }
+
+    normalizePath(path) {
+        // If it's already an absolute URL with http/https, return it
+        if (path.startsWith('http')) {
+            return path;
+        }
+        
+        // Handle paths based on whether they're absolute or relative
+        let normalizedPath;
+        
+        if (path.startsWith('/')) {
+            // Absolute path from site root
+            normalizedPath = path;
+            
+            // If we have a baseUrl, construct full URL similar to search.js
+            if (this.baseUrl) {
+                return this.baseUrl + normalizedPath;
+            }
+            
+            // Without baseUrl, use relative paths based on current location
+            const currentPath = window.location.pathname;
+            const pathParts = currentPath.split('/').filter(Boolean);
+            
+            // Calculate relative path based on current position
+            if (currentPath.includes('/pages/')) {
+                const depth = pathParts.length - 1;
+                return '../'.repeat(depth) + path.substring(1);
+            } else {
+                // We're at root
+                return path.substring(1);
+            }
+        } else {
+            // It's a relative path, return as is
+            return path;
         }
     }
 
@@ -114,6 +257,7 @@ class HexagonNavigation {
     }
 
     updateContent(section) {
+        // Directly access a property of the navigationData object
         const data = this.navigationData[section];
         if (!data) return;
 
