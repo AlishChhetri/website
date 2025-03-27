@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-container input');
     const searchResults = document.getElementById('searchResults');
     
-    // We'll fetch this from the sitemap.json
+    // Base URL will be loaded from sitemap.json
     let siteBaseUrl = '';
     
     // Function to normalize a URL with the correct base path
@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Handle both absolute and relative paths
         const cleanPath = url.startsWith('/') ? url : '/' + url;
+        
+        // If the path already includes the base URL path component, don't duplicate it
+        if (siteBaseUrl && cleanPath.includes(siteBaseUrl.replace(/^https?:\/\/[^\/]+/, ''))) {
+            return cleanPath;
+        }
+        
         return siteBaseUrl + cleanPath;
     }
     
@@ -119,21 +125,27 @@ document.addEventListener('DOMContentLoaded', function() {
     async function buildSearchIndex() {
         searchData.length = 0; // Clear existing data
         
+        // Calculate the asset path regardless of where the current HTML file is
+        let assetsPath = '';
+        
+        // Check if we're on the main site or in a subdirectory
+        if (window.location.pathname.includes('/pages/')) {
+            // We're in a subdirectory, need to go up
+            assetsPath = '../assets/js/sitemap.json';
+        } else {
+            // We're at the root
+            assetsPath = 'assets/js/sitemap.json';
+        }
+        
+        console.log("Attempting to load sitemap from:", assetsPath);
+        
         try {
-            // First, get base URL from sitemap before doing anything else
-            console.log("Loading sitemap to get base URL...");
-            
-            // Use a temporary URL for the first fetch only
-            // We need a relative URL that will work whether running locally or on GitHub Pages
-            const tempSitemapUrl = (window.location.protocol + '//' + window.location.host + 
-                                   window.location.pathname).replace(/\/[^\/]*$/, '/assets/js/sitemap.json');
-            
-            const sitemapResponse = await fetch(tempSitemapUrl);
-            if (!sitemapResponse.ok) {
-                throw new Error(`Failed to fetch sitemap.json: ${sitemapResponse.status}`);
+            const response = await fetch(assetsPath);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch sitemap.json from ${assetsPath}: ${response.status}`);
             }
             
-            const sitemapData = await sitemapResponse.json();
+            const sitemapData = await response.json();
             
             // Set the base URL from the sitemap
             siteBaseUrl = sitemapData.baseUrl;
@@ -165,6 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Add to search index
                     searchData.push(pageData);
                     console.log("Indexed:", pageData.title);
+                } else {
+                    console.error("Failed to index:", fullUrl);
                 }
             }
             
@@ -174,9 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
             setupSearchDebounce();
         } catch (error) {
             console.error('Error building search index:', error);
-            // Fallback to a default base URL if something goes wrong
-            siteBaseUrl = 'https://alishchhetri.github.io/website';
-            console.log("Using fallback base URL:", siteBaseUrl);
+            // Display error message in search results
+            searchResults.innerHTML = `<div class="search-error">Failed to load search index: ${error.message}</div>`;
+            searchResults.classList.add('active');
         }
     }
     
