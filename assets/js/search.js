@@ -214,72 +214,89 @@ document.addEventListener('DOMContentLoaded', function() {
     async function buildSearchIndex() {
         searchData.length = 0; // Clear existing data
         
-        // Try a comprehensive set of possible paths to sitemap.json
-        const possiblePaths = [
-            // First try to load from the same directory as the script
-            getSitemapPath(),
-            
-            // Try based on current window location
-            window.location.pathname.includes('/pages/') ? '../../assets/js/sitemap.json' : 'assets/js/sitemap.json',
-            
-            // Try with absolute path from site root
-            '/assets/js/sitemap.json',
-            
-            // Try with various relative paths
-            'assets/js/sitemap.json',
-            '../assets/js/sitemap.json',
-            '../../assets/js/sitemap.json',
-            
-            // Direct path to the file (since it's in the same directory as search.js)
-            'sitemap.json'
-        ];
-        
         let sitemapData = null;
         let loadedPath = null;
         
-        // Try each path until we find the sitemap
-        for (const path of possiblePaths) {
-            try {
-                console.log("Attempting to load sitemap from:", path);
-                const response = await fetch(path);
-                
-                if (response.ok) {
-                    sitemapData = await response.json();
-                    loadedPath = path;
-                    console.log("Successfully loaded sitemap from:", path);
-                    break;
+        // Try direct path first - since both files are in the same directory
+        try {
+            // Simple approach - Try to load the sitemap right from the same directory
+            console.log("Attempting to load sitemap from same directory");
+            const response = await fetch('sitemap.json');
+            
+            if (response.ok) {
+                sitemapData = await response.json();
+                loadedPath = 'sitemap.json';
+                console.log("Successfully loaded sitemap from same directory");
+            }
+        } catch (error) {
+            console.warn("Failed initial sitemap loading attempt:", error.message);
+        }
+        
+        // If direct approach failed, try other paths
+        if (!sitemapData) {
+            // Fallback paths to try, in order of likelihood
+            const possiblePaths = [
+                './sitemap.json',                                             // Same directory, explicit
+                window.location.pathname.includes('/pages/') ? 
+                    '../../assets/js/sitemap.json' :                          // From pages directory
+                    './assets/js/sitemap.json',                               // From root
+                '../assets/js/sitemap.json',                                  // One level up
+                '../../assets/js/sitemap.json',                               // Two levels up
+                '/assets/js/sitemap.json',                                    // Absolute from site root
+            ];
+            
+            // Try each path until we find the sitemap
+            for (const path of possiblePaths) {
+                try {
+                    console.log("Attempting to load sitemap from:", path);
+                    const response = await fetch(path);
+                    
+                    if (response.ok) {
+                        sitemapData = await response.json();
+                        loadedPath = path;
+                        console.log("Successfully loaded sitemap from:", path);
+                        break;
+                    }
+                } catch (error) {
+                    console.warn(`Failed to load sitemap from ${path}:`, error.message);
                 }
-            } catch (error) {
-                console.warn(`Failed to load sitemap from ${path}:`, error.message);
             }
         }
         
+        // As a final fallback, try to construct the path based on the script's location
         if (!sitemapData) {
-            // One last attempt - directly try to load from a URL constructed from the current script
             try {
-                const scriptPath = document.currentScript?.src || 
-                                  Array.from(document.getElementsByTagName('script'))
-                                      .find(s => s.src.includes('search.js'))?.src || '';
+                const scriptElements = document.getElementsByTagName('script');
+                let scriptPath = '';
+                
+                // Find the search.js script path
+                for (const script of scriptElements) {
+                    if (script.src && script.src.includes('search.js')) {
+                        scriptPath = script.src;
+                        break;
+                    }
+                }
                 
                 if (scriptPath) {
-                    const sitemapUrl = scriptPath.replace('search.js', 'sitemap.json');
-                    console.log("Final attempt - loading sitemap from:", sitemapUrl);
+                    // Replace 'search.js' with 'sitemap.json' in the script's URL path
+                    const sitemapUrl = scriptPath.replace(/search\.js(\?.*)?$/, 'sitemap.json');
+                    console.log("Final attempt - loading sitemap directly from script path:", sitemapUrl);
                     
                     const response = await fetch(sitemapUrl);
                     if (response.ok) {
                         sitemapData = await response.json();
                         loadedPath = sitemapUrl;
-                        console.log("Successfully loaded sitemap from:", sitemapUrl);
+                        console.log("Successfully loaded sitemap from script path:", sitemapUrl);
                     }
                 }
             } catch (error) {
-                console.error("Final attempt failed:", error);
+                console.error("Script path resolution failed:", error);
             }
         }
         
         if (!sitemapData) {
-            const errorMsg = "Could not load sitemap.json from any of the attempted paths";
-            console.error(errorMsg);
+            const errorMsg = "Could not load sitemap.json. Please check the console for details.";
+            console.error("All sitemap loading attempts failed");
             searchResults.innerHTML = `<div class="search-error">${errorMsg}</div>`;
             searchResults.classList.add('active');
             return;
@@ -295,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log("Building search index using sitemap with", sitemapData.sitemap.length, "pages");
         
-        // First, add all items directly from the sitemap
+        // Process the sitemap data to build search index
         for (const page of sitemapData.sitemap) {
             // Create initial placeholder entry with metadata from sitemap
             const pageUrl = normalizeUrl(page.url);
