@@ -27,46 +27,21 @@ class HexagonNavigation {
             // Initialize the content with the main section
             this.updateContent('main');
             
-            // Add event listeners to hexagons
+            // Add click events directly to the hexagon divs
             this.subHexagons.forEach((hex, index) => {
-                // Get the SVG element inside the hexagon for precise click detection
-                const hexSvg = hex.querySelector('.hexagon-svg');
-                
-                // Add click event to the SVG element instead of the entire div
-                hexSvg.addEventListener('click', (event) => {
-                    if (!this.isAnimating) {
+                hex.addEventListener('click', (event) => {
+                    // Only handle clicks if not animating and not empty
+                    if (!this.isAnimating && !hex.classList.contains('empty')) {
                         this.handleHexagonClick(index, event);
                     }
-                    // Prevent event from bubbling to parent elements
-                    event.stopPropagation();
-                });
-                
-                // Add click event to the text element if it's not empty
-                const textElement = hex.querySelector('.hexagon-text');
-                textElement.addEventListener('click', (event) => {
-                    if (!this.isAnimating && textElement.textContent.trim() !== '') {
-                        this.handleHexagonClick(index, event);
-                    }
-                    // Prevent event from bubbling to parent elements
-                    event.stopPropagation();
                 });
             });
 
-            // Add click event to center hexagon SVG and text
-            const centerHexSvg = this.centerHex.querySelector('.hexagon-svg');
-            centerHexSvg.addEventListener('click', (event) => {
+            // Add click event to center hexagon (parent navigation)
+            this.centerHex.addEventListener('click', (event) => {
                 if (!this.isAnimating && this.navigationData[this.currentSection].parent) {
                     this.navigateBack();
                 }
-                event.stopPropagation();
-            });
-            
-            const centerText = this.centerHex.querySelector('.hexagon-text');
-            centerText.addEventListener('click', (event) => {
-                if (!this.isAnimating && this.navigationData[this.currentSection].parent) {
-                    this.navigateBack();
-                }
-                event.stopPropagation();
             });
             
             // Set initial state class
