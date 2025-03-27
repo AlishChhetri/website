@@ -6,6 +6,12 @@ class HexagonNavigation {
         this.currentSection = 'main';
         this.isAnimating = false;
         this.navigationData = null;
+
+        // Set all sub-hexagons to empty by default - ONLY CLASS STATE, NOT DIRECT STYLING
+        this.subHexagons.forEach(hex => {
+            hex.classList.add('empty');
+        });
+
         this.init();
     }
 
@@ -126,41 +132,47 @@ class HexagonNavigation {
                 const item = data.subs[index];
                 hex.style.display = 'flex';
                 
-                if (item && item.path) {
-                    // Extract name from path
-                    let name = '';
-                    
-                    if (item.path.includes('/')) {
-                        // If the path is a URL, extract the last part
-                        const parts = item.path.split('/');
-                        name = parts[parts.length - 1].replace('.html', '');
-                        name = name.charAt(0).toUpperCase() + name.slice(1).replace(/_/g, ' ');
-                    } else {
-                        // If it's a section name, use that directly
-                        name = item.path.charAt(0).toUpperCase() + item.path.slice(1).replace(/_/g, ' ');
-                    }
-                    
-                    // Set the text and determine if it's a page or directory
-                    textElement.textContent = name;
-                    hex.classList.remove('empty');
-                    
-                    // Detect if it's a directory (no file extension)
-                    const isDirectory = !item.path.includes('.html');
-                    if (isDirectory) {
-                        hex.classList.add('directory');
-                        // Update click handler to use path as section name
-                        hex.setAttribute('data-section', item.path);
-                    } else {
-                        hex.classList.remove('directory');
-                        // Update click handler to navigate to page
-                        hex.setAttribute('data-page', item.path);
-                    }
-                } else {
-                    // Empty hexagon
+                if (item.type === 'empty' || !item.name) {
+                    // Empty hexagon - only update the state
                     textElement.textContent = '';
                     hex.classList.add('empty');
                     hex.classList.remove('directory');
-                    hex.querySelector('.hexagon-svg').style.backgroundImage = '';
+                    
+                    // Remove any previous attributes
+                    hex.removeAttribute('data-section');
+                    hex.removeAttribute('data-page');
+                    hex.removeAttribute('data-download');
+                } else if (item.path) {
+                    // Non-empty hexagon with a path
+                    textElement.textContent = item.name;
+                    hex.classList.remove('empty');
+                    
+                    // Determine if it's a directory, page, or download
+                    if (item.type === 'directory') {
+                        hex.classList.add('directory');
+                        hex.setAttribute('data-section', item.path);
+                        hex.removeAttribute('data-page');
+                        hex.removeAttribute('data-download');
+                    } else if (item.type === 'page') {
+                        hex.classList.remove('directory');
+                        hex.setAttribute('data-page', item.path);
+                        hex.removeAttribute('data-section');
+                        hex.removeAttribute('data-download');
+                    } else if (item.type === 'download') {
+                        hex.classList.remove('directory');
+                        hex.setAttribute('data-download', item.path);
+                        hex.removeAttribute('data-section');
+                        hex.removeAttribute('data-page');
+                    }
+                } else if (item.type === 'image') {
+                    // Image type but no path (skills section)
+                    textElement.textContent = item.name;
+                    hex.classList.remove('empty');
+                    
+                    // Remove any previous attributes
+                    hex.removeAttribute('data-section');
+                    hex.removeAttribute('data-page');
+                    hex.removeAttribute('data-download');
                 }
             } else {
                 // Hide hexagons that don't have corresponding items

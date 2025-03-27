@@ -290,16 +290,20 @@ body {
 }
 
 .hexagon-sub .hexagon-svg {
-    background-image: url('../images/full_honeycomb.svg');
+    background-image: url('../images/empty_honeycomb.svg'); /* Default to empty */
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     transform: scale(200%);
 }
 
+/* These rules control the hexagon appearance based on state */
 .hexagon-sub.empty .hexagon-svg {
     background-image: url('../images/empty_honeycomb.svg');
-    opacity: 0.7;
+}
+
+.hexagon-sub:not(.empty) .hexagon-svg {
+    background-image: url('../images/full_honeycomb.svg');
 }
 
 /* Text styling for all hexagons */
