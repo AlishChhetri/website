@@ -15,30 +15,46 @@
 
 <body>
     <!--NAVIGATION-->
-    <nav class="navbar">
-        <div class="logo">
-            <a href="index.html">
-                <!-- <img src="path/to/image" alt="Logo" class="logo-img"> -->
-                <div class="logo-text">AC</div>
-            </a>
-        </div>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="./assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+                </a>
+            </div>
 
         <!-- nav-links section -->
         <div class="nav-links">
             <a href="./pages/about.html" class="nav-link">About</a>
             <a href="./pages/blog.html" class="nav-link">Blog</a>
         </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section with Hexagon Navigation -->
     <section class="hero">
         <div class="hero-content">
-            <h2>Hello 👋,</h2>
+            <h2>Hello,</h2>
             <h1>I'm <span class="full-name">Alish Chhetri</span></h1>
-            <p>I am a software engineer and data scientist interested in Human-Computer Interaction.</p>
-            <a href="./assets/resume.pdf" download class="resume-link">Resume →</a>
+            <p>I am a <strong>software engineer</strong> and <strong>data scientist</strong> interested in
+                Human-Computer Interaction.</p>
+
+            <div class="hero-image">
+                <img src="./assets/images/hero_image.png" alt="Profile Picture">
+            </div>
         </div>
-        
+
         <div class="hexagon-navigation">
             <div class="hexagon-container">
                 <div class="hexagon-center">
@@ -121,7 +137,10 @@
             </a>
         </div>
     </footer>
-
+    <script src="./assets/js/hello.js"></script>
+    <script src="./assets/js/cursor.js"></script>
+    <script src="./assets/js/search.js"></script>
+    <script src="./assets/js/theme_toggle.js"></script>
     <script src="./assets/js/hexagon_navigation.js"></script>
 </body>
 
