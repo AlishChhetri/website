@@ -7,22 +7,54 @@ document.addEventListener('DOMContentLoaded', function() {
     // Base URL will be loaded from sitemap.json
     let siteBaseUrl = '';
     
+    // Determine current page path relative to site root
+    function getCurrentPath() {
+        const path = window.location.pathname;
+        // If we're on GitHub Pages or similar hosting, handle the repository name in the path
+        const basePath = siteBaseUrl ? new URL(siteBaseUrl).pathname : '';
+        if (basePath && path.startsWith(basePath)) {
+            return path.substring(basePath.length) || '/';
+        }
+        return path;
+    }
+    
     // Function to normalize a URL with the correct base path
-    function normalizeUrl(url) {
+    function normalizeUrl(url, currentPath = getCurrentPath()) {
         // If it's already an absolute URL with http/https, return it
         if (url.startsWith('http')) {
             return url;
         }
         
-        // Handle both absolute and relative paths
-        const cleanPath = url.startsWith('/') ? url : '/' + url;
+        // Handle paths based on whether they're absolute or relative
+        let normalizedPath;
         
-        // If the path already includes the base URL path component, don't duplicate it
-        if (siteBaseUrl && cleanPath.includes(siteBaseUrl.replace(/^https?:\/\/[^\/]+/, ''))) {
-            return cleanPath;
+        if (url.startsWith('/')) {
+            // Absolute path from site root
+            normalizedPath = url;
+        } else {
+            // Relative path from current directory
+            const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+            normalizedPath = currentDir + url;
+            
+            // Handle ".." in paths (up one directory)
+            while (normalizedPath.includes('/../')) {
+                const beforeParent = normalizedPath.substring(0, normalizedPath.indexOf('/../'));
+                const parentDir = beforeParent.substring(0, beforeParent.lastIndexOf('/'));
+                const afterParent = normalizedPath.substring(normalizedPath.indexOf('/../') + 4);
+                normalizedPath = parentDir + '/' + afterParent;
+            }
+            
+            // Handle "./" in paths (current directory)
+            normalizedPath = normalizedPath.replace(/\/\.\//g, '/');
         }
         
-        return siteBaseUrl + cleanPath;
+        // Ensure the path starts with /
+        if (!normalizedPath.startsWith('/')) {
+            normalizedPath = '/' + normalizedPath;
+        }
+        
+        // Construct full URL with base
+        return siteBaseUrl + normalizedPath;
     }
     
     // Function to fetch HTML content from a URL
@@ -67,8 +99,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const bodyClone = body.cloneNode(true);
             
             // Remove nav and footer if they exist
-            if (nav && bodyClone.contains(nav)) bodyClone.removeChild(nav);
-            if (footer && bodyClone.contains(footer)) bodyClone.removeChild(footer);
+            if (nav) {
+                const navInClone = bodyClone.querySelector('nav');
+                if (navInClone) bodyClone.removeChild(navInClone);
+            }
+            if (footer) {
+                const footerInClone = bodyClone.querySelector('footer');
+                if (footerInClone) bodyClone.removeChild(footerInClone);
+            }
             
             content = bodyClone.textContent;
         }
@@ -80,19 +118,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const preview = content.substring(0, 150) + '...';
         
         // Determine page type from URL 
-        let type;
+        let type = 'page'; // Default type
+        
+        // Check against common patterns first
         if (url.includes('/blog/')) {
             type = 'blog';
         } else if (url.includes('/projects/')) {
             type = 'project';
         } else if (url.includes('/about.html')) {
             type = 'about';
-        } else if (url.includes('/index.html') || url === '/') {
+        } else if (url.includes('/index.html') || url.endsWith('/')) {
             type = 'home';
         } else if (url.includes('/games/')) {
             type = 'game';
-        } else {
-            type = 'page';
         }
         
         return {
@@ -100,14 +138,25 @@ document.addEventListener('DOMContentLoaded', function() {
             content,
             preview,
             url,
-            type
+            type,
+            relPath: getRelativePath(url)
         };
+    }
+    
+    // Convert absolute URL to site-relative path
+    function getRelativePath(url) {
+        if (url.startsWith(siteBaseUrl)) {
+            return url.substring(siteBaseUrl.length);
+        }
+        return url;
     }
     
     // Fix any relative links in the current page
     function fixPageLinks() {
         // Find all links in the document
         const links = document.querySelectorAll('a[href]');
+        const currentPath = getCurrentPath();
+        
         links.forEach(link => {
             const href = link.getAttribute('href');
             // Only fix internal links (not external, anchors, mail, etc.)
@@ -115,27 +164,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 !href.startsWith('mailto:') && !href.startsWith('tel:')) {
                 
                 // Get proper URL with base path
-                const fixedHref = normalizeUrl(href);
+                const fixedHref = normalizeUrl(href, currentPath);
                 link.setAttribute('href', fixedHref);
             }
         });
+    }
+    
+    // Determine the correct path to sitemap.json based on current location
+    function getSitemapPath() {
+        // Get current path and calculate relative path to assets
+        const currentPath = window.location.pathname;
+        
+        // For GitHub Pages, handle the repository name in the path
+        const repoMatch = currentPath.match(/\/[^\/]+\/[^\/]+\//);
+        const baseRepo = repoMatch ? repoMatch[0] : '';
+        
+        // Count directory levels from root
+        let dirCount = 0;
+        let tempPath = currentPath.replace(baseRepo, '/');
+        
+        // Skip the first slash
+        let pathParts = tempPath.split('/').filter(part => part.length > 0);
+        dirCount = pathParts.length;
+        
+        // If we're in a file like '/pages/about.html', we need to go up one level
+        if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes('.')) {
+            dirCount--;
+        }
+        
+        // Build the relative path to assets/js/sitemap.json
+        let assetsPath = '';
+        if (dirCount === 0) {
+            // We're at the root
+            assetsPath = 'assets/js/sitemap.json';
+        } else {
+            // We're in subdirectories, go up the correct number of levels
+            assetsPath = '../'.repeat(dirCount) + 'assets/js/sitemap.json';
+        }
+        
+        return assetsPath;
     }
     
     // Main function to build the search index
     async function buildSearchIndex() {
         searchData.length = 0; // Clear existing data
         
-        // Calculate the asset path regardless of where the current HTML file is
-        let assetsPath = '';
-        
-        // Check if we're on the main site or in a subdirectory
-        if (window.location.pathname.includes('/pages/')) {
-            // We're in a subdirectory, need to go up
-            assetsPath = '../assets/js/sitemap.json';
-        } else {
-            // We're at the root
-            assetsPath = 'assets/js/sitemap.json';
-        }
+        // Calculate the asset path for sitemap.json
+        const assetsPath = getSitemapPath();
         
         console.log("Attempting to load sitemap from:", assetsPath);
         
@@ -156,41 +231,84 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log("Building search index using sitemap with", sitemapData.sitemap.length, "pages");
             
-            // Process each page in the sitemap
+            // First, add all items directly from the sitemap
             for (const page of sitemapData.sitemap) {
-                const fullUrl = normalizeUrl(page.url);
+                // Create initial placeholder entry with metadata from sitemap
+                const pageUrl = normalizeUrl(page.url);
                 
-                console.log("Indexing:", fullUrl);
-                const html = await fetchContent(fullUrl);
+                // Use whatever information we have from the sitemap
+                const initialData = {
+                    title: page.title || getFileNameFromUrl(page.url),
+                    content: '',  // Will be populated after fetching
+                    preview: 'Loading content...',
+                    url: pageUrl,
+                    type: page.badge || 'page',
+                    relPath: page.url
+                };
                 
-                if (html) {
-                    // Extract content or use sitemap metadata
-                    const pageData = extractContent(html, page.url);
-                    
-                    // Override with sitemap data if available
-                    if (page.title) pageData.title = page.title;
-                    if (page.badge) pageData.type = page.badge;
-                    
-                    // Always use the normalized URL for navigation
-                    pageData.url = fullUrl;
-                    
-                    // Add to search index
-                    searchData.push(pageData);
-                    console.log("Indexed:", pageData.title);
-                } else {
-                    console.error("Failed to index:", fullUrl);
-                }
+                // Add to search index immediately so we have basic search functionality
+                searchData.push(initialData);
+                
+                // Fetch the HTML asynchronously to populate the content
+                fetchAndUpdateContent(pageUrl, initialData);
             }
-            
-            console.log('Search index built with', searchData.length, 'entries');
             
             // Set up search debounce
             setupSearchDebounce();
+            
         } catch (error) {
             console.error('Error building search index:', error);
             // Display error message in search results
             searchResults.innerHTML = `<div class="search-error">Failed to load search index: ${error.message}</div>`;
             searchResults.classList.add('active');
+        }
+    }
+    
+    // Extract a filename from a URL for a default title
+    function getFileNameFromUrl(url) {
+        const parts = url.split('/');
+        const lastPart = parts[parts.length - 1];
+        
+        // If it ends with .html, remove the extension
+        if (lastPart.endsWith('.html')) {
+            return lastPart.substring(0, lastPart.length - 5)
+                .replace(/-/g, ' ')
+                .replace(/_/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize words
+        }
+        
+        // Handle index.html or empty (directory)
+        if (lastPart === 'index.html' || lastPart === '') {
+            // Get the directory name
+            const dirName = parts[parts.length - 2] || 'Home';
+            return dirName.charAt(0).toUpperCase() + dirName.slice(1);
+        }
+        
+        return lastPart;
+    }
+    
+    // Fetch HTML content and update the search index
+    async function fetchAndUpdateContent(url, indexEntry) {
+        try {
+            const html = await fetchContent(url);
+            
+            if (html) {
+                // Extract content data
+                const contentData = extractContent(html, url);
+                
+                // Update the index entry with the extracted content
+                indexEntry.content = contentData.content;
+                indexEntry.preview = contentData.preview;
+                
+                // If the sitemap didn't provide a title, use the one from the HTML
+                if (!indexEntry.title || indexEntry.title === getFileNameFromUrl(url)) {
+                    indexEntry.title = contentData.title;
+                }
+                
+                console.log("Content updated for:", indexEntry.title);
+            }
+        } catch (error) {
+            console.error(`Error updating content for ${url}:`, error);
         }
     }
     
@@ -209,6 +327,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 performSearch();
             }
         });
+        
+        // Add keyboard navigation for results
+        searchInput.addEventListener('keydown', function(e) {
+            if (searchResults.classList.contains('active')) {
+                const resultItems = searchResults.querySelectorAll('.search-result-item');
+                const activeItem = searchResults.querySelector('.search-result-item.active');
+                let activeIndex = -1;
+                
+                if (activeItem) {
+                    activeIndex = Array.from(resultItems).indexOf(activeItem);
+                }
+                
+                // Handle arrow keys
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (activeIndex < resultItems.length - 1) {
+                        if (activeItem) activeItem.classList.remove('active');
+                        resultItems[activeIndex + 1].classList.add('active');
+                        resultItems[activeIndex + 1].scrollIntoView({ block: 'nearest' });
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (activeIndex > 0) {
+                        if (activeItem) activeItem.classList.remove('active');
+                        resultItems[activeIndex - 1].classList.add('active');
+                        resultItems[activeIndex - 1].scrollIntoView({ block: 'nearest' });
+                    }
+                } else if (e.key === 'Enter' && activeItem) {
+                    e.preventDefault();
+                    window.location.href = activeItem.getAttribute('data-url');
+                }
+            }
+        });
     }
     
     // Function to perform the search
@@ -223,23 +374,67 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Filter search data
-        let results = searchData.filter(item => 
-            item.content.includes(query) || 
-            item.title.toLowerCase().includes(query)
-        );
-        
-        // Sort by relevance (title matches first, then content)
-        results.sort((a, b) => {
-            const aInTitle = a.title.toLowerCase().includes(query);
-            const bInTitle = b.title.toLowerCase().includes(query);
+        let results = searchData.filter(item => {
+            // Check for matches in title and content
+            const titleMatch = item.title.toLowerCase().includes(query);
+            const contentMatch = item.content && item.content.includes(query);
             
-            if (aInTitle && !bInTitle) return -1;
-            if (!aInTitle && bInTitle) return 1;
-            return 0;
+            // Also check URL path for matches
+            const pathMatch = item.relPath && item.relPath.toLowerCase().includes(query);
+            
+            return titleMatch || contentMatch || pathMatch;
+        });
+        
+        // Sort by relevance with multiple factors
+        results.sort((a, b) => {
+            // Calculate relevance scores
+            const aScore = calculateRelevance(a, query);
+            const bScore = calculateRelevance(b, query);
+            
+            // Higher scores first
+            return bScore - aScore;
         });
         
         // Display results
         displayResults(results, query);
+    }
+    
+    // Calculate a relevance score for sorting results
+    function calculateRelevance(item, query) {
+        let score = 0;
+        
+        // Title matches are most important
+        if (item.title.toLowerCase().includes(query)) {
+            score += 100;
+            // Exact title match is even better
+            if (item.title.toLowerCase() === query) {
+                score += 50;
+            }
+            // Title starting with query is also good
+            if (item.title.toLowerCase().startsWith(query)) {
+                score += 25;
+            }
+        }
+        
+        // Content matches
+        if (item.content && item.content.includes(query)) {
+            score += 50;
+            
+            // How many times the query appears in content
+            const matches = item.content.split(query).length - 1;
+            score += Math.min(matches, 10) * 2; // Cap at 20 points for frequency
+        }
+        
+        // Path matches
+        if (item.relPath && item.relPath.toLowerCase().includes(query)) {
+            score += 30;
+        }
+        
+        // Boost home page and important sections
+        if (item.type === 'home') score += 10;
+        if (item.type === 'about') score += 5;
+        
+        return score;
     }
     
     // Function to display search results
@@ -260,6 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             results.forEach(result => {
                 const resultItem = document.createElement('div');
                 resultItem.className = 'search-result-item';
+                resultItem.setAttribute('data-url', result.url);
                 
                 // Add result type badge
                 const typeBadge = document.createElement('span');
@@ -285,6 +481,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 searchResults.appendChild(resultItem);
             });
+            
+            // Set first result as active for keyboard navigation
+            const firstResult = searchResults.querySelector('.search-result-item');
+            if (firstResult) {
+                firstResult.classList.add('active');
+            }
         } else {
             // Show no results message
             searchResults.classList.add('active');
@@ -299,8 +501,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function highlightText(text, query) {
         if (!query || !text) return text || '';
         
-        const regex = new RegExp(query, 'gi');
-        return text.replace(regex, match => `<span class="highlight">${match}</span>`);
+        const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+    
+    // Escape special regex characters to safely use in RegExp
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
     // Close search results when clicking elsewhere
