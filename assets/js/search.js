@@ -4,14 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-container input');
     const searchResults = document.getElementById('searchResults');
     
-    // Explicitly set the full base URL for GitHub Pages deployment
-    const fullBaseUrl = 'https://alishchhetri.github.io/website/';
-    const baseUrl = '/website/';
-    
-    // Function to determine the current hostname and protocol
-    function getOriginUrl() {
-        return window.location.origin;
-    }
+    // We'll fetch this from the sitemap.json
+    let siteBaseUrl = '';
     
     // Function to normalize a URL with the correct base path
     function normalizeUrl(url) {
@@ -20,37 +14,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return url;
         }
         
-        // Handle absolute paths within the site
-        if (url.startsWith('/')) {
-            // If it already includes the baseUrl, don't duplicate it
-            if (url.startsWith(baseUrl + '/') || url === baseUrl) {
-                return url;
-            }
-            return baseUrl + url;
-        }
-        
-        // Ensure relative URLs have a leading slash
-        return baseUrl + '/' + url;
+        // Handle both absolute and relative paths
+        const cleanPath = url.startsWith('/') ? url : '/' + url;
+        return siteBaseUrl + cleanPath;
     }
     
     // Function to fetch HTML content from a URL
     async function fetchContent(url) {
         try {
-            // Make sure we use the correct base URL for absolute path resolution
-            let normalizedUrl;
-            
-            if (url.startsWith('http')) {
-                normalizedUrl = url;
-            } else {
-                // Handle relative and absolute paths
-                const relativeUrl = normalizeUrl(url);
-                normalizedUrl = new URL(relativeUrl, getOriginUrl()).href;
-            }
-            
-            console.log("Fetching:", normalizedUrl);
-            const response = await fetch(normalizedUrl);
+            console.log("Fetching:", url);
+            const response = await fetch(url);
             if (!response.ok) {
-                throw new Error(`Failed to fetch ${normalizedUrl}: ${response.status}`);
+                throw new Error(`Failed to fetch ${url}: ${response.status}`);
             }
             return await response.text();
         } catch (error) {
@@ -59,91 +34,83 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Fix link URLs in HTML content
-    function fixBlogLinksInHTML(doc) {
-        // Find all links in the blog page and fix their URLs
-        const links = doc.querySelectorAll('a[href]');
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && !href.startsWith('http') && !href.startsWith('#') && 
-                !href.startsWith('mailto:') && !href.startsWith('tel:')) {
-                // Fix relative links for blog posts
-                if (href.startsWith('/pages/blog/') || href.includes('post_')) {
-                    link.setAttribute('href', normalizeUrl(href));
-                }
-            }
-        });
-        return doc;
-    }
-    
-    // Discover pages based on common patterns with full URLs
-    async function discoverPagesWithPattern() {
-        const knownPages = new Set();
+    // Extract content from HTML for search indexing
+    function extractContent(html, url) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
         
-        // Add known root pages
-        knownPages.add('/index.html');
-        knownPages.add('/pages/about.html');
-        knownPages.add('/pages/blog.html');
-        knownPages.add('/pages/projects.html');
+        // Get page title
+        const title = doc.querySelector('title')?.textContent || 
+                      doc.querySelector('h1')?.textContent || 
+                      'Untitled Page';
         
-        // More comprehensive pattern templates with various naming conventions
-        const patternTemplates = [
-            // Blog patterns
-            { prefix: '/pages/blog/post_', count: 10 },
-            { prefix: '/pages/blog/blog_', count: 10 },
+        // Get page content (prioritize main content areas)
+        const mainContent = doc.querySelector('main, .base-body, .content, article');
+        let content = '';
+        
+        if (mainContent) {
+            // Use main content if available
+            content = mainContent.textContent;
+        } else {
+            // Fallback to body content, excluding navigation and footer
+            const body = doc.body;
+            const nav = doc.querySelector('nav');
+            const footer = doc.querySelector('footer');
             
-            // Project patterns
-            { prefix: '/pages/projects/project_', count: 10 },
+            // Clone body to avoid modifying the original
+            const bodyClone = body.cloneNode(true);
             
-            // Game patterns
-            { prefix: '/pages/games/game_', count: 10 }
-        ];
-        
-        // Various naming patterns to try
-        const numberWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-        const numerics = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        
-        // For each pattern template, try to discover pages
-        for (const pattern of patternTemplates) {
-            // Try different naming conventions
-            const patternVariations = [
-                // Word-based (e.g., blog_one.html)
-                ...numberWords.map(word => `${pattern.prefix}${word}.html`),
-                // Numeric (e.g., blog_1.html)
-                ...numerics.map(num => `${pattern.prefix}${num}.html`)
-            ];
+            // Remove nav and footer if they exist
+            if (nav && bodyClone.contains(nav)) bodyClone.removeChild(nav);
+            if (footer && bodyClone.contains(footer)) bodyClone.removeChild(footer);
             
-            // Try each variation
-            for (const path of patternVariations) {
-                try {
-                    const normalizedPath = normalizeUrl(path);
-                    const fullPath = new URL(normalizedPath, getOriginUrl()).href;
-                    
-                    console.log("Checking path:", fullPath);
-                    const response = await fetch(fullPath, {method: 'HEAD'});
-                    
-                    if (response.ok) {
-                        console.log("Found page:", path);
-                        knownPages.add(path);
-                    }
-                } catch (error) {
-                    // File doesn't exist, that's OK
-                    console.log("Path not found:", path);
-                }
-            }
+            content = bodyClone.textContent;
         }
         
-        return knownPages;
+        // Clean up content
+        content = content.replace(/\s+/g, ' ').trim().toLowerCase();
+        
+        // Create a preview (first ~150 characters)
+        const preview = content.substring(0, 150) + '...';
+        
+        // Determine page type from URL 
+        let type;
+        if (url.includes('/blog/')) {
+            type = 'blog';
+        } else if (url.includes('/projects/')) {
+            type = 'project';
+        } else if (url.includes('/about.html')) {
+            type = 'about';
+        } else if (url.includes('/index.html') || url === '/') {
+            type = 'home';
+        } else if (url.includes('/games/')) {
+            type = 'game';
+        } else {
+            type = 'page';
+        }
+        
+        return {
+            title,
+            content,
+            preview,
+            url,
+            type
+        };
     }
     
-    // Fix the blog links in the pages
-    function fixBlogLinks() {
-        // Find all blog post links in the document and update them
-        const blogLinks = document.querySelectorAll('a[href^="/pages/blog/"], a[href*="post_"]');
-        blogLinks.forEach(link => {
+    // Fix any relative links in the current page
+    function fixPageLinks() {
+        // Find all links in the document
+        const links = document.querySelectorAll('a[href]');
+        links.forEach(link => {
             const href = link.getAttribute('href');
-            if (href && !href.startsWith('http')) {
-                link.setAttribute('href', normalizeUrl(href));
+            // Only fix internal links (not external, anchors, mail, etc.)
+            if (href && !href.startsWith('http') && !href.startsWith('#') && 
+                !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+                
+                // Get proper URL with base path
+                const fixedHref = normalizeUrl(href);
+                link.setAttribute('href', fixedHref);
             }
         });
     }
@@ -153,37 +120,51 @@ document.addEventListener('DOMContentLoaded', function() {
         searchData.length = 0; // Clear existing data
         
         try {
-            console.log("Full base URL:", fullBaseUrl);
-            console.log("Path base URL:", baseUrl);
+            // First, get base URL from sitemap before doing anything else
+            console.log("Loading sitemap to get base URL...");
             
-            // Fix any blog links in the current page
-            fixBlogLinks();
+            // Use a temporary URL for the first fetch only
+            // We need a relative URL that will work whether running locally or on GitHub Pages
+            const tempSitemapUrl = (window.location.protocol + '//' + window.location.host + 
+                                   window.location.pathname).replace(/\/[^\/]*$/, '/assets/js/sitemap.json');
             
-            // Discover pages based on patterns
-            const patternPages = await discoverPagesWithPattern();
-            console.log("Pages discovered by pattern:", patternPages.size);
+            const sitemapResponse = await fetch(tempSitemapUrl);
+            if (!sitemapResponse.ok) {
+                throw new Error(`Failed to fetch sitemap.json: ${sitemapResponse.status}`);
+            }
             
-            // Convert the Set to Array for logging
-            console.log("Found pages:", Array.from(patternPages));
+            const sitemapData = await sitemapResponse.json();
             
-            // Crawl each page for search indexing
-            for (const pagePath of patternPages) {
-                try {
-                    const normalizedPath = normalizeUrl(pagePath);
-                    const fullPath = new URL(normalizedPath, getOriginUrl()).href;
+            // Set the base URL from the sitemap
+            siteBaseUrl = sitemapData.baseUrl;
+            console.log("Using base URL from sitemap:", siteBaseUrl);
+            
+            // Now that we have the base URL, fix links in the current page
+            fixPageLinks();
+            
+            console.log("Building search index using sitemap with", sitemapData.sitemap.length, "pages");
+            
+            // Process each page in the sitemap
+            for (const page of sitemapData.sitemap) {
+                const fullUrl = normalizeUrl(page.url);
+                
+                console.log("Indexing:", fullUrl);
+                const html = await fetchContent(fullUrl);
+                
+                if (html) {
+                    // Extract content or use sitemap metadata
+                    const pageData = extractContent(html, page.url);
                     
-                    console.log("Indexing:", fullPath);
-                    const html = await fetchContent(fullPath);
+                    // Override with sitemap data if available
+                    if (page.title) pageData.title = page.title;
+                    if (page.badge) pageData.type = page.badge;
                     
-                    if (html) {
-                        const pageData = extractContent(html, pagePath);
-                        // Store the normalized URL path for navigation
-                        pageData.url = normalizedPath;
-                        searchData.push(pageData);
-                        console.log("Indexed:", pageData.title);
-                    }
-                } catch (error) {
-                    console.error(`Could not index ${pagePath}:`, error);
+                    // Always use the normalized URL for navigation
+                    pageData.url = fullUrl;
+                    
+                    // Add to search index
+                    searchData.push(pageData);
+                    console.log("Indexed:", pageData.title);
                 }
             }
             
@@ -193,6 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
             setupSearchDebounce();
         } catch (error) {
             console.error('Error building search index:', error);
+            // Fallback to a default base URL if something goes wrong
+            siteBaseUrl = 'https://alishchhetri.github.io/website';
+            console.log("Using fallback base URL:", siteBaseUrl);
         }
     }
     
@@ -229,6 +213,16 @@ document.addEventListener('DOMContentLoaded', function() {
             item.content.includes(query) || 
             item.title.toLowerCase().includes(query)
         );
+        
+        // Sort by relevance (title matches first, then content)
+        results.sort((a, b) => {
+            const aInTitle = a.title.toLowerCase().includes(query);
+            const bInTitle = b.title.toLowerCase().includes(query);
+            
+            if (aInTitle && !bInTitle) return -1;
+            if (!aInTitle && bInTitle) return 1;
+            return 0;
+        });
         
         // Display results
         displayResults(results, query);
@@ -271,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Make clickable
                 resultItem.addEventListener('click', () => {
-                    // Navigate to the page with proper base URL handling
+                    // Navigate to the page
                     window.location.href = result.url;
                 });
                 

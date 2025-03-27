@@ -1,0 +1,45 @@
+{
+  "baseUrl": "https://alishchhetri.github.io/website",
+  "sitemap": [
+    {
+      "url": "/index.html",
+      "badge": "home",
+      "title": "Home"
+    },
+    {
+      "url": "/pages/about.html",
+      "badge": "about",
+      "title": "About Me"
+    },
+    {
+      "url": "/pages/blog.html",
+      "badge": "blog",
+      "title": "Blog"
+    },
+    {
+      "url": "/pages/projects.html",
+      "badge": "project",
+      "title": "Projects"
+    },
+    {
+      "url": "/pages/blog/post_one.html",
+      "badge": "blog",
+      "title": "Post One"
+    },
+    {
+      "url": "/pages/blog/post_two.html",
+      "badge": "blog",
+      "title": "Post Two"
+    },
+    {
+      "url": "/pages/projects/project_one.html",
+      "badge": "project",
+      "title": "Project One"
+    },
+    {
+      "url": "/pages/projects/project_two.html",
+      "badge": "project",
+      "title": "Project Two"
+    }
+  ]
+}
