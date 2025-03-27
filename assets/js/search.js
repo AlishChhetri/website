@@ -4,11 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-container input');
     const searchResults = document.getElementById('searchResults');
     
-    // Detect base URL for GitHub Pages deployment
-    const baseUrl = getBaseUrl();
+    // Explicitly set base URL for GitHub Pages deployment
+    const baseUrl = '/website';
     
-    // Function to determine the base URL of the site
+    // Function to determine the base URL of the site (keeping for flexibility but using explicit value)
     function getBaseUrl() {
+        // For GitHub Pages with the specific repository name
+        if (window.location.hostname === 'alishchhetri.github.io') {
+            return '/website';
+        }
+        
         // Check if we're on GitHub Pages with a repo name in the path
         const currentUrl = window.location.href;
         const ghPagesMatch = currentUrl.match(/https?:\/\/[^\/]+\/([^\/]+)\//);
