@@ -172,7 +172,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Determine the correct path to sitemap.json based on current location
     function getSitemapPath() {
-        // Get current path
+        // First, try to determine based on the script's location
+        const scripts = document.getElementsByTagName('script');
+        for (const script of scripts) {
+            const src = script.src;
+            if (src && src.includes('search.js')) {
+                // If this is our script, the sitemap should be in the same directory
+                return src.substring(0, src.lastIndexOf('/') + 1) + 'sitemap.json';
+            }
+        }
+
+        // Fallback approach based on current page path
         const currentPath = window.location.pathname;
         
         // For GitHub Pages, handle the repository name in the path
@@ -182,47 +192,46 @@ document.addEventListener('DOMContentLoaded', function() {
         // Normalize the path by removing the repository part
         let tempPath = currentPath.replace(baseRepo, '/');
         
-        // Count directory levels from root by splitting the path
-        const pathParts = tempPath.split('/').filter(part => part.length > 0);
+        // If we're in the root directory or index.html
+        if (tempPath === '/' || tempPath.endsWith('/index.html') || tempPath.endsWith('/')) {
+            return 'assets/js/sitemap.json';
+        }
         
-        // Start with base path count
+        // Otherwise build a path based on directory depth
+        const pathParts = tempPath.split('/').filter(part => length > 0);
         let dirCount = pathParts.length;
         
-        // If the last part is a file (contains a dot), we need to go up one more level
+        // If the last part is a file (has an extension), reduce directory count by 1
         if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes('.')) {
             dirCount--;
         }
         
-        // Handle special case for root (index.html)
-        if (tempPath === '/' || tempPath.endsWith('/index.html')) {
-            dirCount = 0;
-        }
-        
-        // Build the path to sitemap.json with the correct number of "../"
-        let sitemapPath = '';
-        if (dirCount === 0) {
-            // We're at the root
-            sitemapPath = 'assets/js/sitemap.json';
-        } else {
-            // We're in subdirectories, go up the correct number of levels
-            sitemapPath = '../'.repeat(dirCount) + 'assets/js/sitemap.json';
-        }
-        
-        console.log("Calculated sitemap path:", sitemapPath, "for current path:", currentPath);
-        return sitemapPath;
+        // Build relative path with appropriate number of "../"
+        return '../'.repeat(dirCount) + 'assets/js/sitemap.json';
     }
     
     // Main function to build the search index
     async function buildSearchIndex() {
         searchData.length = 0; // Clear existing data
         
-        // Try different possible paths to find sitemap.json
+        // Try a comprehensive set of possible paths to sitemap.json
         const possiblePaths = [
-            getSitemapPath(),               // Calculated path
-            'assets/js/sitemap.json',       // Direct from root
-            '../assets/js/sitemap.json',    // One level up
-            '../../assets/js/sitemap.json', // Two levels up
-            '/assets/js/sitemap.json'       // Absolute path
+            // First try to load from the same directory as the script
+            getSitemapPath(),
+            
+            // Try based on current window location
+            window.location.pathname.includes('/pages/') ? '../../assets/js/sitemap.json' : 'assets/js/sitemap.json',
+            
+            // Try with absolute path from site root
+            '/assets/js/sitemap.json',
+            
+            // Try with various relative paths
+            'assets/js/sitemap.json',
+            '../assets/js/sitemap.json',
+            '../../assets/js/sitemap.json',
+            
+            // Direct path to the file (since it's in the same directory as search.js)
+            'sitemap.json'
         ];
         
         let sitemapData = null;
@@ -246,6 +255,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (!sitemapData) {
+            // One last attempt - directly try to load from a URL constructed from the current script
+            try {
+                const scriptPath = document.currentScript?.src || 
+                                  Array.from(document.getElementsByTagName('script'))
+                                      .find(s => s.src.includes('search.js'))?.src || '';
+                
+                if (scriptPath) {
+                    const sitemapUrl = scriptPath.replace('search.js', 'sitemap.json');
+                    console.log("Final attempt - loading sitemap from:", sitemapUrl);
+                    
+                    const response = await fetch(sitemapUrl);
+                    if (response.ok) {
+                        sitemapData = await response.json();
+                        loadedPath = sitemapUrl;
+                        console.log("Successfully loaded sitemap from:", sitemapUrl);
+                    }
+                }
+            } catch (error) {
+                console.error("Final attempt failed:", error);
+            }
+        }
+        
+        if (!sitemapData) {
             const errorMsg = "Could not load sitemap.json from any of the attempted paths";
             console.error(errorMsg);
             searchResults.innerHTML = `<div class="search-error">${errorMsg}</div>`;
@@ -253,6 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // If we've reached here, we have successfully loaded the sitemap
         // Set the base URL from the sitemap
         siteBaseUrl = sitemapData.baseUrl;
         console.log("Using base URL from sitemap:", siteBaseUrl);
