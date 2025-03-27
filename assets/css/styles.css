@@ -108,17 +108,21 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
-    min-height: calc(100vh - 200px);
-    gap: 4rem;
+    min-height: 90vh; /* Increase from calc(100vh - 200px) for more vertical space */
+    padding: 0 var(--padding-page);
+    box-sizing: border-box;
+    gap: 5rem; /* Slightly increased from 4rem */
+    position: relative;
 }
 
 .hero-content {
     flex: 1;
     max-width: 600px;
     text-align: left;
+    padding: 2rem 0;
 }
 
 .hero-image {
@@ -144,7 +148,7 @@ body {
 }
 
 .hero-content h1 {
-    font-size: 5rem;
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 800;
     margin-bottom: 1.5rem;
     line-height: 1.1;
@@ -152,17 +156,47 @@ body {
 
 .hero-content .full-name {
     color: var(--secondary-color);
+    display: inline-block;
+    position: relative;
+}
+
+.hero-content .full-name::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: var(--accent-color);
+    z-index: -1;
+    transform: translateY(5px);
 }
 
 .hero-content h2 {
-    font-size: 2rem;
-    margin-bottom: -1rem;
+    font-size: clamp(1.5rem, 3vw, 2.2rem); /* Responsive font size */
+    margin-bottom: -0.5rem;
+    font-weight: 600;
+}
+
+.hero-content h3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.8rem); /* Responsive font size */
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
 }
 
 .hero-description {
     font-size: 1.25rem;
     color: var (--text-color-secondary);
     margin-bottom: 2rem;
+}
+
+.hero-content p {
+    font-size: clamp(1.25rem, 1.5vw, 1.5rem); /* Responsive font size */
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--text-color-secondary);
+    max-width: 90%;
 }
 
 .cta-buttons {
@@ -219,7 +253,7 @@ body {
     margin: 0 auto;
     overflow: visible;
     flex: 1;
-    max-width: 600px;
+    max-width: 650px; /* Slightly increased from 600px */
 }
 
 .hexagon-container {
@@ -467,6 +501,57 @@ body {
     pointer-events: none;
 }
 
+/* Make the hero section responsive for smaller screens */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column-reverse;
+        min-height: auto;
+        padding-top: 2rem;
+        gap: 2rem;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+    
+    .hero-content p {
+        max-width: 100%;
+    }
+    
+    .hexagon-navigation {
+        padding: 0;
+        min-height: 500px;
+    }
+    
+    .hexagon-container {
+        transform: scale(0.9);
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        gap: 1rem;
+    }
+    
+    .hexagon-container {
+        transform: scale(0.8);
+        min-height: 450px;
+    }
+    
+    .hero-content h1 {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hexagon-container {
+        transform: scale(0.7);
+        min-height: 400px;
+    }
+}
+
 /* ---------- BASE PAGE TEMPLATE ---------- */
 
 .base-body {
@@ -553,7 +638,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    border-radius: var(--border-radius);
+    border-radius: var (--border-radius);
     border: 3px solid var(--text-color);
     transition: transform var(--transition-duration) var(--transition-timing);
 }
