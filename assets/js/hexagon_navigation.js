@@ -213,33 +213,58 @@ class HexagonNavigation {
             return path;
         }
         
-        // Handle paths based on whether they're absolute or relative
-        let normalizedPath;
-        
-        if (path.startsWith('/')) {
-            // Absolute path from site root
-            normalizedPath = path;
-            
-            // If we have a baseUrl, construct full URL similar to search.js
-            if (this.baseUrl) {
+        // If we have a baseUrl, use it to construct the full URL
+        if (this.baseUrl) {
+            // Handle both absolute and relative paths
+            if (path.startsWith('/')) {
+                // For absolute paths (starting with /), directly append to baseUrl
+                return this.baseUrl + path;
+            } else {
+                // For relative paths, we need to determine the current path first
+                const currentPath = this.getCurrentPath();
+                const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                
+                // Combine current directory with the relative path
+                let normalizedPath = currentDir + path;
+                
+                // Handle ".." in paths (up one directory)
+                while (normalizedPath.includes('/../')) {
+                    const beforeParent = normalizedPath.substring(0, normalizedPath.indexOf('/../'));
+                    const parentDir = beforeParent.substring(0, beforeParent.lastIndexOf('/'));
+                    const afterParent = normalizedPath.substring(normalizedPath.indexOf('/../') + 4);
+                    normalizedPath = parentDir + '/' + afterParent;
+                }
+                
+                // Handle "./" in paths (current directory)
+                normalizedPath = normalizedPath.replace(/\/\.\//g, '/');
+                
+                // Ensure the path starts with /
+                if (!normalizedPath.startsWith('/')) {
+                    normalizedPath = '/' + normalizedPath;
+                }
+                
+                // Construct full URL with base
                 return this.baseUrl + normalizedPath;
             }
-            
-            // Without baseUrl, use relative paths based on current location
-            const currentPath = window.location.pathname;
-            const pathParts = currentPath.split('/').filter(Boolean);
-            
-            // Calculate relative path based on current position
-            if (currentPath.includes('/pages/')) {
-                const depth = pathParts.length - 1;
-                return '../'.repeat(depth) + path.substring(1);
-            } else {
-                // We're at root
-                return path.substring(1);
-            }
         } else {
-            // It's a relative path, return as is
-            return path;
+            // Fallback for when baseUrl isn't available
+            // Handle absolute paths from site root
+            if (path.startsWith('/')) {
+                // Calculate relative path based on current position
+                const currentPath = window.location.pathname;
+                const pathParts = currentPath.split('/').filter(Boolean);
+                
+                if (currentPath.includes('/pages/')) {
+                    const depth = pathParts.length - 1;
+                    return '../'.repeat(depth) + path.substring(1);
+                } else {
+                    // We're at root
+                    return path.substring(1);
+                }
+            } else {
+                // It's already a relative path, return as is
+                return path;
+            }
         }
     }
 
