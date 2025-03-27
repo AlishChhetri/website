@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Chompers</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <!-- <link rel="icon" href="../assets/images/logos/favicon.svg" type="favicon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+            </a>
+        </div>
+
+        <!-- nav-links section -->
+        <div class="nav-links">
+            <a href="../pages/about.html" class="nav-link">About</a>
+            <a href="../pages/projects.html" class="nav-link">Projects</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="base-body">
+        <div class="base-header">
+            <h1>Projects</h1>
+            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
+        </div>
+        <!-- Projects Section -->
+        <section class="projects">
+            <h2 class="projects-title">Projects</h2>
+            <div class="projects-list">
+                <!-- Projects Item 1 -->
+                <div class="projects-container">
+                    <div class="projects-image">
+                        <img src="../assets/images/placeholder_profile_picture.png" alt="Projects Project 1">
+                    </div>
+                    <div class="projects-content">
+                        <h3>Project 1</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
+                        <a href="/pages/projects/project_one.html" class="projects-link">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- Projects Item 2 -->
+                <div class="projects-container">
+                    <div class="projects-image">
+                        <img src="../assets/images/placeholder_profile_picture.png" alt="Projects Project 2">
+                    </div>
+                    <div class="projects-content">
+                        <h3>Project 2</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
+                        <a href="pages/projects/project_two.html" class="projects-link">View Project →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="https://gmail.com" target="_blank" title="Email">
+                <img src="../assets/images/logos/gmail_logo.svg" alt="Email" class="footer-image email-logo">
+            </a>
+            <a href="https://linkedin.com" target="_blank" title="LinkedIn">
+                <img src="../assets/images/logos/linkedin_logo.svg" alt="LinkedIn Logo"
+                    class="footer-image linkedin-logo">
+            </a>
+            <a href="https://github.com" target="_blank" title="GitHub">
+                <img src="../assets/images/logos/github_logo.svg" alt="GitHub Logo" class="footer-image github-logo">
+            </a>
+        </div>
+    </footer>
+    <script src="../assets/js/hexagon_background.js"></script>
+    <script src="../assets/js/hello.js"></script>
+    <script src="../assets/js/cursor.js"></script>
+    <script src="../assets/js/search.js"></script>
+    <script src="../assets/js/theme_toggle.js"></script>
+    <script src="../assets/js/hexagon_navigation.js"></script>
+</body>
+
+</html>

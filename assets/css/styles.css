@@ -224,6 +224,7 @@ body {
     background-color: #FF5733;
     color: white;
     border-left: 3px solid #CC3300;
+    padding: 3px 10px;
 }
 
 .result-type-badge.project {
@@ -358,7 +359,7 @@ input:checked+.slider:before {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    min-height: 90vh;
+    min-height: 80vh;
     padding: 0 var(--padding-page);
     box-sizing: border-box;
     gap: 5rem;
@@ -839,18 +840,21 @@ footer {
 }
 
 /* ---------- BLOG SECTION ---------- */
-.blog {
+.blog,
+.projects {
     padding: 4rem var(--padding-page);
     background-color: transparent;
 }
 
-.blog-title {
+.blog-title,
+.projects-title {
     font-size: 2.5rem;
     margin-bottom: 3rem;
     color: var(--text-color);
 }
 
-.blog-list {
+.blog-list,
+.projects-list {
     display: flex;
     flex-direction: column;
     gap: 6rem;
@@ -858,19 +862,22 @@ footer {
     margin: 0 auto;
 }
 
-.blog-container {
+.blog-container,
+.projects-container {
     display: flex;
     align-items: center;
     gap: 2rem;
 }
 
-.blog-image {
+.blog-image,
+.projects-image {
     flex: 2;
     height: 400px;
     width: 100%;
 }
 
-.blog-image img {
+.blog-image img,
+.projects-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -880,36 +887,42 @@ footer {
     box-shadow: -8px 8px 0px var(--text-color);
 }
 
-.blog-image img:hover {
+.blog-image img:hover,
+.projects-image img:hover {
     transform: translate(4px, -4px);
     box-shadow: -12px 12px 0px var(--text-color);
 }
 
-.blog-content {
+.blog-content,
+.projects-content {
     flex: 1;
     padding: 1rem;
 }
 
-.blog-content h2 {
+.blog-content h2,
+.projects-content h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--text-color);
 }
 
-.blog-content h3 {
+.blog-content h3,
+.projects-content h3 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     color: var(--text-color);
 }
 
-.blog-content p {
+.blog-content p,
+.projects-content p {
     font-size: 1.1rem;
     color: var(--text-color-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
 }
 
-.blog-link {
+.blog-link,
+.projects-link {
     display: inline-block;
     color: var(--text-color);
     text-decoration: none;
@@ -917,7 +930,8 @@ footer {
     transition: transform var(--transition), color var(--transition);
 }
 
-.blog-link:hover {
+.blog-link:hover,
+.projects-link:hover {
     transform: translateX(4px);
 }
 
