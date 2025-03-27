@@ -171,7 +171,7 @@ body {
 
 .search-result-item:hover,
 .search-result-item.active {
-    background-color: rgba(255, 200, 48, 0.1);
+    background-color: var(--background-color);
     border-left-color: var(--accent-color);
 }
 
@@ -264,7 +264,7 @@ body {
 }
 
 .search-results::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--background-color);
 }
 
 .search-results::-webkit-scrollbar-thumb {
@@ -830,10 +830,6 @@ footer {
 }
 
 /* ---------- BLOG SECTION ---------- */
-.blog {
-    padding: 4rem var(--padding-page);
-    background-color: transparent;
-}
 
 .blog-list {
     display: flex;
