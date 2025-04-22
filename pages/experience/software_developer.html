@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Developer Experience | Alish Chhetri</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <!-- <link rel="icon" href="../../assets/images/logos/favicon.svg" type="favicon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../../index.html">
+                <img src="../../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+            </a>
+        </div>
+
+        <!-- nav-links section -->
+        <div class="nav-links">
+            <a href="../../pages/about.html" class="nav-link">About</a>
+            <a href="../../pages/blog.html" class="nav-link">Blog</a>
+            <a href="../../pages/projects.html" class="nav-link">Projects</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="base-body">
+            <div class="base-header">
+                <h1>Software Developer</h1>
+                <h2>Computer and Information Science Department, Allegheny College | August 2023 - May 2024</h2>
+            </div>
+
+            <div class="base-section">
+                <h3>Role Overview</h3>
+                <p>As a Software Developer in the Computer and Information Science Department at Allegheny College, I led the development of Chasten, a Python-based static analysis tool. This role involved advanced programming, tool design, and integration of modern AI technologies to create a more intuitive approach to code analysis.</p>
+            </div>
+
+            <div class="base-section">
+                <h3>Key Accomplishments</h3>
+                <ul>
+                    <li>Developed Chasten, a static analysis tool that uses XPath expressions to detect Abstract Syntax Tree (AST) patterns in code</li>
+                    <li>Created a system enabling custom linting rules without requiring complex frameworks or relying on imprecise regex pattern matching</li>
+                    <li>Led the integration of Large Language Models (LLMs) for natural language-to-XPath query conversion, significantly optimizing development time</li>
+                    <li>Worked with faculty and students to refine the tool based on real-world programming education use cases</li>
+                </ul>
+            </div>
+
+            <div class="base-section">
+                <h3>Technical Skills Applied</h3>
+                <ul>
+                    <li><strong>Python Development:</strong> Designed and implemented the core tool architecture in Python</li>
+                    <li><strong>AST Analysis:</strong> Created algorithms to parse, analyze, and query code syntax trees</li>
+                    <li><strong>XML/XPath:</strong> Implemented XML transformations and XPath query systems</li>
+                    <li><strong>LLM Integration:</strong> Developed interfaces to leverage LLM capabilities for code analysis</li>
+                    <li><strong>Testing:</strong> Implemented comprehensive testing suite to ensure tool reliability</li>
+                </ul>
+            </div>
+
+            <div class="base-section">
+                <h3>Impact and Results</h3>
+                <p>The development of Chasten has had significant impact on programming education and code quality assessment:</p>
+                <ul>
+                    <li>Provided faculty and students with a more intuitive way to detect and understand code patterns</li>
+                    <li>Reduced the learning curve for creating custom linting rules by enabling natural language descriptions</li>
+                    <li>Improved the precision of code pattern detection compared to traditional regex-based approaches</li>
+                    <li>Created a foundation for future research in code analysis and educational technology</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="mailto:chhetrialish83@gmail.com" target="_blank" title="Email">
+                <img src="../../assets/images/logos/gmail_logo.svg" alt="Email" class="footer-image email-logo">
+            </a>
+            <a href="https://www.linkedin.com/in/alish-chhetri/" target="_blank" title="LinkedIn">
+            <img src="../../assets/images/logos/linkedin_logo.svg" alt="LinkedIn Logo"
+                class="footer-image linkedin-logo">
+            </a>
+            <a href="https://github.com/AlishChhetri" target="_blank" title="GitHub">
+            <img src="../../assets/images/logos/github_logo.svg" alt="GitHub Logo" class="footer-image github-logo">
+            </a>
+        </div>
+    </footer>
+    <script src="../../assets/js/hexagon_background.js"></script>
+    <script src="../../assets/js/hello.js"></script>
+    <script src="../../assets/js/cursor.js"></script>
+    <script src="../../assets/js/search.js"></script>
+    <script src="../../assets/js/theme_toggle.js"></script>
+    <script src="../../assets/js/hexagon_navigation.js"></script>
+</body>
+
+</html> 

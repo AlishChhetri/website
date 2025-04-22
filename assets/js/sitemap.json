@@ -22,14 +22,34 @@
       "title": "Projects"
     },
     {
-      "url": "/pages/blog/post_one.html",
+      "url": "/pages/blog/bereal.html",
       "badge": "blog",
-      "title": "Post One"
+      "title": "The Performance of Authenticity: BeReal and Digital Identity"
     },
     {
-      "url": "/pages/blog/post_two.html",
+      "url": "/pages/blog/queer_gaming.html",
       "badge": "blog",
-      "title": "Post Two"
+      "title": "Beyond Representation: Queerness in Video Games"
+    },
+    {
+      "url": "/pages/blog/online_extremism.html",
+      "badge": "blog",
+      "title": "The Intersection of Misogyny and Racism in Online Spaces"
+    },
+    {
+      "url": "/pages/blog/tradwife_movement.html",
+      "badge": "blog",
+      "title": "The Paradox of Choice: Understanding the Tradwife Movement"
+    },
+    {
+      "url": "/pages/blog/netflix_algorithms.html",
+      "badge": "blog",
+      "title": "Race and Algorithms: How Netflix Personalizes the Viewing Experience"
+    },
+    {
+      "url": "/pages/blog/digital_mourning.html",
+      "badge": "blog",
+      "title": "Digital Mourning as Activism: From Grief to Social Change"
     },
     {
       "url": "/pages/projects/project_one.html",
@@ -40,6 +60,66 @@
       "url": "/pages/projects/project_two.html",
       "badge": "project",
       "title": "Project Two"
+    },
+    {
+      "url": "/pages/projects/pseudo.html",
+      "badge": "project",
+      "title": "Pseudo: Simulation of Omni-Model Behavior"
+    },
+    {
+      "url": "/pages/projects/drone.html",
+      "badge": "project",
+      "title": "Autonomous Drone Pathfinding & Collision Avoidance"
+    },
+    {
+      "url": "/pages/projects/typewriter_piano.html",
+      "badge": "project",
+      "title": "Typewriter Piano: Multisensory Interaction Design"
+    },
+    {
+      "url": "/pages/projects/chasten.html",
+      "badge": "project",
+      "title": "Chasten: Python Static Analysis Tool"
+    },
+    {
+      "url": "/pages/projects/academic_data_science.html",
+      "badge": "project",
+      "title": "Academic Data Science"
+    },
+    {
+      "url": "/pages/projects/apicenter.html",
+      "badge": "project",
+      "title": "APICenter: API Standardization Framework"
+    },
+    {
+      "url": "/pages/experience/acutec.html",
+      "badge": "experience",
+      "title": "Acutec Precision Aerospace - Post Processing Intern"
+    },
+    {
+      "url": "/pages/experience/software_dev.html",
+      "badge": "experience",
+      "title": "Software Developer - Allegheny College"
+    },
+    {
+      "url": "/pages/experience/it_tech.html",
+      "badge": "experience",
+      "title": "IT Technician - Allegheny College"
+    },
+    {
+      "url": "/pages/experience/teaching_assistant.html",
+      "badge": "experience",
+      "title": "Teaching Assistant - Allegheny College"
+    },
+    {
+      "url": "/pages/experience/acm_secretary.html",
+      "badge": "experience",
+      "title": "ACM Secretary - Allegheny College"
+    },
+    {
+      "url": "/pages/experience/data_gators.html",
+      "badge": "experience",
+      "title": "Data Gators - Allegheny College"
     }
   ]
 }

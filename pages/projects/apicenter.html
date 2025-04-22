@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APICenter | Alish Chhetri</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <!-- <link rel="icon" href="../../assets/images/logos/favicon.svg" type="favicon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../../index.html">
+                <img src="../../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+            </a>
+        </div>
+
+        <!-- nav-links section -->
+        <div class="nav-links">
+            <a href="../../pages/about.html" class="nav-link">About</a>
+            <a href="../../pages/blog.html" class="nav-link">Blog</a>
+            <a href="../../pages/projects.html" class="nav-link">Projects</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <div class="base-body">
+        <div class="base-header">
+            <h1>APICenter</h1>
+            <h2>Standardized API Interaction Framework</h2>
+        </div>
+
+        <div class="base-section">
+            <h3>Project Overview</h3>
+            <p>APICenter is a framework I developed to standardize API interactions across different services, particularly focused on AI and machine learning APIs. The framework serves as the foundation for my Pseudo project, enabling seamless integration of multiple AI services through a unified interface.</p>
+        </div>
+
+        <div class="base-section">
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Unified Interface:</strong> Provides a consistent interaction pattern for all API services, regardless of their underlying implementation</li>
+                <li><strong>Reduced Boilerplate:</strong> Eliminates repetitive code when working with multiple APIs, streamlining development</li>
+                <li><strong>Request Standardization:</strong> Converts application-specific requests to the format required by each API provider</li>
+                <li><strong>Response Normalization:</strong> Transforms varied API responses into a consistent format for easier application integration</li>
+                <li><strong>Error Handling:</strong> Implements robust error management across different API services</li>
+            </ul>
+        </div>
+
+        <div class="base-section">
+            <h3>Technical Implementation</h3>
+            <p>APICenter is built with a modular architecture allowing for easy extension to new services:</p>
+            <ul>
+                <li><strong>Adapter Pattern:</strong> Uses the adapter design pattern to normalize interactions between your application and each unique API</li>
+                <li><strong>Service Registry:</strong> Maintains a registry of available services and their capabilities</li>
+                <li><strong>Configuration Management:</strong> Handles API keys, endpoints, and service-specific settings in a secure manner</li>
+                <li><strong>Request Pipeline:</strong> Processes requests through preprocessing, API calling, and response handling stages</li>
+                <li><strong>Caching Layer:</strong> Implements optional caching to reduce API calls and improve performance</li>
+            </ul>
+        </div>
+
+        <div class="base-section">
+            <h3>Supported API Types</h3>
+            <p>While designed to be extensible to any API type, APICenter currently has built-in support for:</p>
+            <ul>
+                <li>Large Language Model APIs (OpenAI, Anthropic, etc.)</li>
+                <li>Text-to-Image Generation (DALL-E, Midjourney API, etc.)</li>
+                <li>Text-to-Video Generation</li>
+                <li>Speech Recognition and Generation APIs</li>
+                <li>Data Analysis and Processing Services</li>
+            </ul>
+        </div>
+
+        <div class="base-section">
+            <h3>Development Process</h3>
+            <p>The development of APICenter followed an iterative approach:</p>
+            <ol>
+                <li>Identifying common patterns across different API services</li>
+                <li>Designing a flexible architecture that could accommodate diverse API structures</li>
+                <li>Implementing the core framework with support for a few basic services</li>
+                <li>Gradually expanding support to additional API types and services</li>
+                <li>Refining the interface based on real-world usage in applications</li>
+            </ol>
+        </div>
+
+        <div class="base-section">
+            <h3>Applications</h3>
+            <p>APICenter serves as the foundation for several of my projects, most notably:</p>
+            <ul>
+                <li><strong>Pseudo:</strong> My senior thesis project that simulates omni-model behavior by integrating diverse AI APIs</li>
+                <li><strong>Other Applications:</strong> The framework is designed to be reusable across multiple projects that require API integration</li>
+            </ul>
+        </div>
+
+        <div class="base-section">
+            <h3>Future Directions</h3>
+            <p>Ongoing development of APICenter includes:</p>
+            <ul>
+                <li>Expanding support for additional API services and types</li>
+                <li>Enhancing performance optimization features</li>
+                <li>Implementing more sophisticated caching strategies</li>
+                <li>Adding comprehensive usage analytics and logging</li>
+                <li>Potentially releasing as an open-source project</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="mailto:chhetrialish83@gmail.com" target="_blank" title="Email">
+                <img src="../../assets/images/logos/gmail_logo.svg" alt="Email" class="footer-image email-logo">
+            </a>
+            <a href="https://www.linkedin.com/in/alish-chhetri/" target="_blank" title="LinkedIn">
+            <img src="../../assets/images/logos/linkedin_logo.svg" alt="LinkedIn Logo"
+                class="footer-image linkedin-logo">
+            </a>
+            <a href="https://github.com/AlishChhetri" target="_blank" title="GitHub">
+            <img src="../../assets/images/logos/github_logo.svg" alt="GitHub Logo" class="footer-image github-logo">
+            </a>
+        </div>
+    </footer>
+    <script src="../../assets/js/hexagon_background.js"></script>
+    <script src="../../assets/js/hello.js"></script>
+    <script src="../../assets/js/cursor.js"></script>
+    <script src="../../assets/js/search.js"></script>
+    <script src="../../assets/js/theme_toggle.js"></script>
+    <script src="../../assets/js/hexagon_navigation.js"></script>
+</body>
+
+</html> 

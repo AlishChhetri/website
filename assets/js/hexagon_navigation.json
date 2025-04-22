@@ -24,14 +24,14 @@
                 "path": "/pages/blog.html"
             },
             {
-                "name": "Games",
+                "name": "Experience",
                 "type": "directory",
-                "path": "games"
+                "path": "experience"
             },
             {
                 "name": "Resume",
                 "type": "download",
-                "path": "/assets/resume.pdf"
+                "path": "/assets/Alish_Chhetri_Resume.pdf"
             }
         ],
         "parent": null
@@ -40,29 +40,29 @@
         "center": "Projects",
         "subs": [
             {
-                "name": "Project 1",
+                "name": "Pseudo",
                 "type": "page",
-                "path": "/pages/projects/project_one.html"
+                "path": "/pages/projects/pseudo.html"
             },
             {
-                "name": "Project 2",
+                "name": "Autonomous Drone",
                 "type": "page",
-                "path": "/pages/projects/project_two.html"
+                "path": "/pages/projects/drone.html"
             },
             {
-                "name": "Project 3",
+                "name": "Typewriter Piano",
                 "type": "page",
-                "path": "/pages/projects/project_three.html"
+                "path": "/pages/projects/typewriter_piano.html"
             },
             {
-                "name": "Project 4",
+                "name": "Chasten",
                 "type": "page",
-                "path": "/pages/projects/project_four.html"
+                "path": "/pages/projects/chasten.html"
             },
             {
-                "name": "Project 5",
+                "name": "Data Science",
                 "type": "page",
-                "path": "/pages/projects/project_five.html"
+                "path": "/pages/projects/academic_data_science.html"
             },
             {
                 "name": "More",
@@ -76,9 +76,9 @@
         "center": "Projects",
         "subs": [
             {
-                "name": "Project 6",
+                "name": "APICenter",
                 "type": "page",
-                "path": "/pages/projects/project_six.html"
+                "path": "/pages/projects/apicenter.html"
             },
             {
                 "name": "",
@@ -107,29 +107,29 @@
         "center": "Blog",
         "subs": [
             {
-                "name": "Blog 1",
+                "name": "BeReal Analysis",
                 "type": "page",
-                "path": "/pages/blog/blog_one.html"
+                "path": "/pages/blog/bereal.html"
             },
             {
-                "name": "Blog 2",
+                "name": "Queerness in Games",
                 "type": "page",
-                "path": "/pages/blog/blog_two.html"
+                "path": "/pages/blog/queer_gaming.html"
             },
             {
-                "name": "Blog 3",
+                "name": "Online Extremism",
                 "type": "page",
-                "path": "/pages/blog/blog_three.html"
+                "path": "/pages/blog/online_extremism.html"
             },
             {
-                "name": "Blog 4",
+                "name": "Tradwife Movement",
                 "type": "page",
-                "path": "/pages/blog/blog_four.html"
+                "path": "/pages/blog/tradwife_movement.html"
             },
             {
-                "name": "Blog 5",
+                "name": "Netflix Algorithms",
                 "type": "page",
-                "path": "/pages/blog/blog_five.html"
+                "path": "/pages/blog/netflix_algorithms.html"
             },
             {
                 "name": "More",
@@ -143,9 +143,9 @@
         "center": "Blog",
         "subs": [
             {
-                "name": "Blog 6",
+                "name": "Digital Mourning",
                 "type": "page",
-                "path": "/pages/blog/blog_six.html"
+                "path": "/pages/blog/digital_mourning.html"
             },
             {
                 "name": "",
@@ -170,9 +170,81 @@
         ],
         "parent": "blog"
     },
+    "experience": {
+        "center": "Experience",
+        "subs": [
+            {
+                "name": "Acutec Aerospace",
+                "type": "page",
+                "path": "/pages/experience/acutec.html"
+            },
+            {
+                "name": "Software Developer",
+                "type": "page",
+                "path": "/pages/experience/software_dev.html"
+            },
+            {
+                "name": "IT Technician",
+                "type": "page",
+                "path": "/pages/experience/it_tech.html"
+            },
+            {
+                "name": "Teaching Assistant",
+                "type": "page",
+                "path": "/pages/experience/teaching_assistant.html"
+            },
+            {
+                "name": "ACM Secretary",
+                "type": "page", 
+                "path": "/pages/experience/acm_secretary.html"
+            },
+            {
+                "name": "More",
+                "type": "directory",
+                "path": "experience_more"
+            }
+        ],
+        "parent": "main"
+    },
+    "experience_more": {
+        "center": "Experience",
+        "subs": [
+            {
+                "name": "Data Gators",
+                "type": "page",
+                "path": "/pages/experience/data_gators.html"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            },
+            {
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "experience"
+    },
     "skills": {
         "center": "Skills",
         "subs": [
+            {
+                "name": "Languages",
+                "type": "directory",
+                "path": "skills_languages"
+            },
             {
                 "name": "Web Dev",
                 "type": "directory",
@@ -189,14 +261,9 @@
                 "path": "skills_data"
             },
             {
-                "name": "Design",
+                "name": "Tools",
                 "type": "directory",
-                "path": "skills_design"
-            },
-            {
-                "name": "DevOps",
-                "type": "directory",
-                "path": "skills_devops"
+                "path": "skills_tools"
             },
             {
                 "name": "More",
@@ -206,42 +273,46 @@
         ],
         "parent": "main"
     },
-    "skills_web": {
-        "center": "Web Dev",
+    "skills_languages": {
+        "center": "Languages",
         "subs": [
             {
-                "name": "Skill 1",
+                "name": "Python",
                 "type": "image"
             },
             {
-                "name": "Skill 2",
+                "name": "JavaScript",
                 "type": "image"
             },
             {
-                "name": "Skill 3",
+                "name": "C++",
                 "type": "image"
             },
             {
-                "name": "Skill 4",
+                "name": "SQL",
                 "type": "image"
             },
             {
-                "name": "Skill 5",
+                "name": "R",
                 "type": "image"
             },
             {
                 "name": "More",
                 "type": "directory",
-                "path": "skills_web_more"
+                "path": "skills_languages_more"
             }
         ],
         "parent": "skills"
     },
-    "skills_web_more": {
-        "center": "Web Dev",
+    "skills_languages_more": {
+        "center": "Languages",
         "subs": [
             {
-                "name": "Skill 6",
+                "name": "Java",
+                "type": "image"
+            },
+            {
+                "name": "VBA",
                 "type": "image"
             },
             {
@@ -259,283 +330,152 @@
             {
                 "name": "",
                 "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
             }
         ],
-        "parent": "skills_web"
+        "parent": "skills_languages"
     },
     "skills_software": {
         "center": "Software Engineering",
         "subs": [
             {
-                "name": "Skill 1",
+                "name": "Unit Testing",
                 "type": "image"
             },
             {
-                "name": "Skill 2",
+                "name": "SDLC",
                 "type": "image"
             },
             {
-                "name": "Skill 3",
+                "name": "Version Control",
                 "type": "image"
             },
             {
-                "name": "Skill 4",
+                "name": "CI/CD",
                 "type": "image"
             },
             {
-                "name": "Skill 5",
+                "name": "Code Review",
                 "type": "image"
-            },
-            {
-                "name": "More",
-                "type": "directory",
-                "path": "skills_software_more"
-            }
-        ],
-        "parent": "skills"
-    },
-    "skills_software_more": {
-        "center": "Software Engineering",
-        "subs": [
-            {
-                "name": "Skill 6",
-                "type": "image"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
             },
             {
                 "name": "",
                 "type": "empty"
             }
         ],
-        "parent": "skills_software"
+        "parent": "skills"
     },
     "skills_data": {
         "center": "Data Science",
         "subs": [
             {
-                "name": "Skill 1",
+                "name": "Data Analysis",
                 "type": "image"
             },
             {
-                "name": "Skill 2",
+                "name": "Computer Vision",
                 "type": "image"
             },
             {
-                "name": "Skill 3",
+                "name": "Statistical Modeling",
                 "type": "image"
             },
             {
-                "name": "Skill 4",
+                "name": "Machine Learning",
                 "type": "image"
             },
             {
-                "name": "Skill 5",
+                "name": "Data Visualization",
                 "type": "image"
             },
             {
-                "name": "More",
-                "type": "directory",
-                "path": "skills_data_more"
+                "name": "",
+                "type": "empty"
+            }
+        ],
+        "parent": "skills"
+    },
+    "skills_tools": {
+        "center": "Tools",
+        "subs": [
+            {
+                "name": "Linux",
+                "type": "image"
+            },
+            {
+                "name": "Windows",
+                "type": "image"
+            },
+            {
+                "name": "VS Code",
+                "type": "image"
+            },
+            {
+                "name": "Git",
+                "type": "image"
+            },
+            {
+                "name": "Docker",
+                "type": "image"
+            },
+            {
+                "name": "",
+                "type": "empty"
             }
         ],
         "parent": "skills"
     },
-    "skills_data_more": {
-        "center": "Data Science",
+    "skills_web": {
+        "center": "Web Dev",
         "subs": [
             {
-                "name": "Skill 6",
+                "name": "HTML",
                 "type": "image"
             },
             {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            }
-        ],
-        "parent": "skills_data"
-    },
-    "skills_design": {
-        "center": "Design",
-        "subs": [
-            {
-                "name": "Skill 1",
+                "name": "CSS",
                 "type": "image"
             },
             {
-                "name": "Skill 2",
+                "name": "JavaScript",
                 "type": "image"
             },
             {
-                "name": "Skill 3",
+                "name": "React",
                 "type": "image"
             },
             {
-                "name": "Skill 4",
+                "name": "Node.js",
                 "type": "image"
-            },
-            {
-                "name": "Skill 5",
-                "type": "image"
-            },
-            {
-                "name": "More",
-                "type": "directory",
-                "path": "skills_design_more"
-            }
-        ],
-        "parent": "skills"
-    },
-    "skills_design_more": {
-        "center": "Design",
-        "subs": [
-            {
-                "name": "Skill 6",
-                "type": "image"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            }
-        ],
-        "parent": "skills_design"
-    },
-    "skills_devops": {
-        "center": "DevOps",
-        "subs": [
-            {
-                "name": "Skill 1",
-                "type": "image"
-            },
-            {
-                "name": "Skill 2",
-                "type": "image"
-            },
-            {
-                "name": "Skill 3",
-                "type": "image"
-            },
-            {
-                "name": "Skill 4",
-                "type": "image"
-            },
-            {
-                "name": "Skill 5",
-                "type": "image"
-            },
-            {
-                "name": "More",
-                "type": "directory",
-                "path": "skills_devops_more"
-            }
-        ],
-        "parent": "skills"
-    },
-    "skills_devops_more": {
-        "center": "DevOps",
-        "subs": [
-            {
-                "name": "Skill 6",
-                "type": "image"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
             },
             {
                 "name": "",
                 "type": "empty"
             }
         ],
-        "parent": "skills_devops"
+        "parent": "skills"
     },
     "skills_more": {
-        "center": "Skills",
+        "center": "More Skills",
         "subs": [
             {
-                "name": "UI/UX",
-                "type": "directory",
-                "path": "skills_uiux"
+                "name": "Problem Solving",
+                "type": "image"
             },
             {
-                "name": "Mobile",
-                "type": "directory",
-                "path": "skills_mobile"
+                "name": "Communication",
+                "type": "image"
             },
             {
-                "name": "Database",
-                "type": "directory",
-                "path": "skills_database"
+                "name": "Teamwork",
+                "type": "image"
             },
             {
-                "name": "",
-                "type": "empty"
+                "name": "Leadership",
+                "type": "image"
             },
             {
-                "name": "",
-                "type": "empty"
+                "name": "Time Management",
+                "type": "image"
             },
             {
                 "name": "",
@@ -543,162 +483,5 @@
             }
         ],
         "parent": "skills"
-    },
-    "skills_uiux": {
-        "center": "UI/UX",
-        "subs": [
-            {
-                "name": "Skill 1",
-                "type": "image"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            }
-        ],
-        "parent": "skills_more"
-    },
-    "skills_mobile": {
-        "center": "Mobile",
-        "subs": [
-            {
-                "name": "Skill 1",
-                "type": "image"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            }
-        ],
-        "parent": "skills_more"
-    },
-    "skills_database": {
-        "center": "Database",
-        "subs": [
-            {
-                "name": "Skill 1",
-                "type": "image"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            }
-        ],
-        "parent": "skills_more"
-    },
-    "games": {
-        "center": "Games",
-        "subs": [
-            {
-                "name": "Game 1",
-                "type": "page",
-                "path": "/pages/games/game_one.html"
-            },
-            {
-                "name": "Game 2",
-                "type": "page",
-                "path": "/pages/games/game_two.html"
-            },
-            {
-                "name": "Game 3",
-                "type": "page",
-                "path": "/pages/games/game_three.html"
-            },
-            {
-                "name": "Game 4",
-                "type": "page",
-                "path": "/pages/games/game_four.html"
-            },
-            {
-                "name": "Game 5",
-                "type": "page",
-                "path": "/pages/games/game_five.html"
-            },
-            {
-                "name": "More",
-                "type": "directory",
-                "path": "games_more"
-            }
-        ],
-        "parent": "main"
-    },
-    "games_more": {
-        "center": "Games",
-        "subs": [
-            {
-                "name": "Game 6",
-                "type": "page",
-                "path": "/pages/games/game_six.html"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            },
-            {
-                "name": "",
-                "type": "empty"
-            }
-        ],
-        "parent": "games"
     }
 }

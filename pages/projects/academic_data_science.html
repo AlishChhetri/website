@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Projects | Alish Chhetri</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <!-- <link rel="icon" href="../../assets/images/logos/favicon.svg" type="favicon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../../index.html">
+                <img src="../../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+            </a>
+        </div>
+
+        <!-- nav-links section -->
+        <div class="nav-links">
+            <a href="../../pages/about.html" class="nav-link">About</a>
+            <a href="../../pages/blog.html" class="nav-link">Blog</a>
+            <a href="../../pages/projects.html" class="nav-link">Projects</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="base-body">
+            <div class="base-header">
+                <h1>Academic Data Science Projects</h1>
+                <h2>Coursework and Research Projects</h2>
+            </div>
+
+            <div class="base-section">
+                <h3>Predictive Analysis of Student Success Factors</h3>
+                <p>A comprehensive analysis of factors influencing academic performance among college students using multiple regression and machine learning techniques. This project analyzed anonymized student data to identify key predictors of academic success, with the goal of informing targeted support interventions.</p>
+                
+                <h4>Technologies Used</h4>
+                <ul>
+                    <li>Python (pandas, scikit-learn, statsmodels)</li>
+                    <li>R for statistical analysis</li>
+                    <li>Tableau for interactive visualizations</li>
+                </ul>
+                
+                <h4>Key Findings</h4>
+                <ul>
+                    <li>Identified study habits and time management as the strongest predictors of academic performance</li>
+                    <li>Developed a model with 78% accuracy in predicting at-risk students</li>
+                    <li>Created interactive dashboards for visualizing the relationships between variables</li>
+                </ul>
+            </div>
+
+            <div class="base-section">
+                <h3>Time Series Analysis of Renewable Energy Adoption</h3>
+                <p>An exploration of trends in renewable energy adoption across different regions, using time series analysis to forecast future growth patterns. This project combined economic indicators with energy consumption data to create predictive models.</p>
+                
+                <h4>Technologies Used</h4>
+                <ul>
+                    <li>Python (pandas, numpy, statsmodels)</li>
+                    <li>ARIMA and Prophet for time series forecasting</li>
+                    <li>Matplotlib and Plotly for visualization</li>
+                </ul>
+                
+                <h4>Key Findings</h4>
+                <ul>
+                    <li>Identified seasonal patterns in renewable energy consumption</li>
+                    <li>Quantified the impact of policy changes on adoption rates</li>
+                    <li>Developed interactive forecasting tools for scenario testing</li>
+                </ul>
+            </div>
+
+            <div class="base-section">
+                <h3>Natural Language Processing for Academic Paper Classification</h3>
+                <p>A project that applied NLP techniques to classify and categorize academic papers based on their abstracts. This system helps researchers quickly identify relevant literature in their field.</p>
+                
+                <h4>Technologies Used</h4>
+                <ul>
+                    <li>Python (NLTK, spaCy, scikit-learn)</li>
+                    <li>TensorFlow for deep learning models</li>
+                    <li>Word embeddings (Word2Vec, GloVe)</li>
+                </ul>
+                
+                <h4>Key Accomplishments</h4>
+                <ul>
+                    <li>Achieved 85% accuracy in classifying papers into appropriate research domains</li>
+                    <li>Implemented a recommendation system based on content similarity</li>
+                    <li>Developed a web interface for researchers to upload and classify papers</li>
+                </ul>
+            </div>
+
+            <div class="base-section">
+                <h3>Data Ethics Research Project</h3>
+                <p>An exploration of ethical considerations in data science, focusing on privacy, bias, and transparency. This project combined technical analysis with ethical frameworks to develop guidelines for responsible data science practices.</p>
+                
+                <h4>Key Components</h4>
+                <ul>
+                    <li>Case studies of ethical dilemmas in data-driven decision making</li>
+                    <li>Analysis of bias in common machine learning algorithms</li>
+                    <li>Framework for ethical data collection and usage</li>
+                    <li>Recommendations for transparent AI systems</li>
+                </ul>
+                
+                <h4>Impact</h4>
+                <p>This research contributed to the development of ethical guidelines for student data science projects at Allegheny College, promoting responsible practices in academic research.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="mailto:chhetrialish83@gmail.com" target="_blank" title="Email">
+                <img src="../../assets/images/logos/gmail_logo.svg" alt="Email" class="footer-image email-logo">
+            </a>
+            <a href="https://www.linkedin.com/in/alish-chhetri/" target="_blank" title="LinkedIn">
+            <img src="../../assets/images/logos/linkedin_logo.svg" alt="LinkedIn Logo"
+                class="footer-image linkedin-logo">
+            </a>
+            <a href="https://github.com/AlishChhetri" target="_blank" title="GitHub">
+            <img src="../../assets/images/logos/github_logo.svg" alt="GitHub Logo" class="footer-image github-logo">
+            </a>
+        </div>
+    </footer>
+    <script src="../../assets/js/hexagon_background.js"></script>
+    <script src="../../assets/js/hello.js"></script>
+    <script src="../../assets/js/cursor.js"></script>
+    <script src="../../assets/js/search.js"></script>
+    <script src="../../assets/js/theme_toggle.js"></script>
+    <script src="../../assets/js/hexagon_navigation.js"></script>
+</body>
+
+</html> 

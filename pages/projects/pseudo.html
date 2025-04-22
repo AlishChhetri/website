@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudo | Alish Chhetri</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <!-- <link rel="icon" href="../../assets/images/logos/favicon.svg" type="favicon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../../index.html">
+                <img src="../../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+            </a>
+        </div>
+
+        <!-- nav-links section -->
+        <div class="nav-links">
+            <a href="../../pages/about.html" class="nav-link">About</a>
+            <a href="../../pages/blog.html" class="nav-link">Blog</a>
+            <a href="../../pages/projects.html" class="nav-link">Projects</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <div class="base-body">
+        <div class="base-header">
+            <h1>Pseudo: Simulation of Omni-Model Behavior</h1>
+            <h2>Senior Thesis Project | August 2024 - May 2025</h2>
+        </div>
+
+        <div class="base-section">
+            <h3>Project Overview</h3>
+            <p>Pseudo is my senior thesis project that aims to create a tool mimicking omni-model behavior by seamlessly integrating diverse AI APIs, including Large Language Models (LLMs), text-to-image generators, and text-to-video systems. The project addresses the challenge of working with multiple AI models by providing a unified interface that standardizes interactions across different API types.</p>
+        </div>
+
+        <div class="base-section">
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Unified API Interface:</strong> Built on APICenter, a framework that standardizes API interactions across different AI services</li>
+                <li><strong>Multi-Modal Integration:</strong> Seamless integration of text, image, and video generation capabilities</li>
+                <li><strong>Reduced Boilerplate:</strong> Significantly reduces repetitive code when working with multiple AI services</li>
+                <li><strong>Model Agnostic:</strong> Designed to work with any AI model or service with minimal adaptation</li>
+            </ul>
+        </div>
+
+        <div class="base-section">
+            <h3>Technical Implementation</h3>
+            <p>The project is built using Python for backend processing and API integration. The architecture follows a modular design that allows for easy addition of new AI services and capabilities. The system includes:</p>
+            <ul>
+                <li>A central dispatcher that routes requests to appropriate AI services</li>
+                <li>Standardized request/response formatting across all integrated services</li>
+                <li>Caching mechanism to optimize repeated calls to external APIs</li>
+                <li>Error handling and fallback mechanisms when specific services are unavailable</li>
+            </ul>
+        </div>
+
+        <div class="base-section">
+            <h3>Development Status</h3>
+            <p>This project is currently under active development as part of my senior thesis. The core architecture and API standardization framework have been established, with ongoing work focused on integrating additional AI services and optimizing the system's performance and reliability.</p>
+            <p>Expected completion: May 2025</p>
+        </div>
+
+        <div class="base-section">
+            <h3>Future Directions</h3>
+            <p>As the project evolves, I plan to implement additional features including:</p>
+            <ul>
+                <li>A graphical user interface for easier interaction with the system</li>
+                <li>Integration with emerging AI services as they become available</li>
+                <li>Performance benchmarking tools to compare different AI services</li>
+                <li>Open-source release to benefit the broader developer community</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="mailto:chhetrialish83@gmail.com" target="_blank" title="Email">
+                <img src="../../assets/images/logos/gmail_logo.svg" alt="Email" class="footer-image email-logo">
+            </a>
+            <a href="https://www.linkedin.com/in/alish-chhetri/" target="_blank" title="LinkedIn">
+            <img src="../../assets/images/logos/linkedin_logo.svg" alt="LinkedIn Logo"
+                class="footer-image linkedin-logo">
+            </a>
+            <a href="https://github.com/AlishChhetri" target="_blank" title="GitHub">
+            <img src="../../assets/images/logos/github_logo.svg" alt="GitHub Logo" class="footer-image github-logo">
+            </a>
+        </div>
+    </footer>
+    <script src="../../assets/js/hexagon_background.js"></script>
+    <script src="../../assets/js/hello.js"></script>
+    <script src="../../assets/js/cursor.js"></script>
+    <script src="../../assets/js/search.js"></script>
+    <script src="../../assets/js/theme_toggle.js"></script>
+    <script src="../../assets/js/hexagon_navigation.js"></script>
+</body>
+
+</html> 

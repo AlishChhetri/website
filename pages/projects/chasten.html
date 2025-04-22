@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chasten | Alish Chhetri</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <!-- <link rel="icon" href="../../assets/images/logos/favicon.svg" type="favicon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--NAVIGATION-->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../../index.html">
+                <img src="../../assets/images/logos/bee_logo.svg" alt="Bee Logo" class="logo">
+            </a>
+        </div>
+
+        <!-- nav-links section -->
+        <div class="nav-links">
+            <a href="../../pages/about.html" class="nav-link">About</a>
+            <a href="../../pages/blog.html" class="nav-link">Blog</a>
+            <a href="../../pages/projects.html" class="nav-link">Projects</a>
+        </div>
+
+        <!--Search bar-->
+        <div class="search-container">
+            <input type="text" placeholder="Search" oninput="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+            <!--  Light/Dark Toggle Switch  -->
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="base-body">
+            <div class="base-header">
+                <h1>Chasten: AST Pattern Detection Tool</h1>
+                <h2>August 2023 - May 2024</h2>
+            </div>
+
+            <div class="base-section">
+                <h3>Project Overview</h3>
+                <p>Chasten is a Python-based static analysis tool that uses XPath expressions to detect Abstract Syntax Tree (AST) patterns in code. This innovative approach enables custom linting rules without requiring complex frameworks or relying on imprecise regex pattern matching.</p>
+            </div>
+
+            <div class="base-section">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>AST-based code analysis for accurate pattern recognition</li>
+                    <li>XPath query system for precise pattern specification</li>
+                    <li>Integration with Large Language Models for natural language-to-XPath conversion</li>
+                    <li>Custom rule creation without complex framework knowledge</li>
+                    <li>More accurate than regex-based pattern matching</li>
+                    <li>Extensible architecture for supporting multiple programming languages</li>
+                </ul>
+            </div>
+
+            <div class="base-section">
+                <h3>Technical Implementation</h3>
+                <p>Chasten works by parsing source code into an Abstract Syntax Tree (AST), converting the tree into an XML representation, and then applying XPath queries to find specific patterns. This approach offers several advantages:</p>
+                
+                <ul>
+                    <li><strong>Structural Analysis:</strong> By working with the AST, Chasten understands the structure of the code rather than just its text representation</li>
+                    <li><strong>Precision:</strong> XPath queries can target specific code constructs with higher accuracy than text-based searches</li>
+                    <li><strong>Flexibility:</strong> New patterns can be defined without modifying the core tool</li>
+                    <li><strong>Language Independence:</strong> The approach can be adapted to any programming language with an available AST parser</li>
+                </ul>
+                
+                <p>The LLM integration component allows users to describe the pattern they want to find in natural language. The system then converts this description into an appropriate XPath query, making the tool accessible to users without XPath expertise.</p>
+            </div>
+
+            <div class="base-section">
+                <h3>Applications</h3>
+                <p>Chasten has several practical applications in software development:</p>
+                
+                <ul>
+                    <li>Custom code quality enforcement in development teams</li>
+                    <li>Educational tools for teaching programming patterns and anti-patterns</li>
+                    <li>Code refactoring assistance</li>
+                    <li>Security vulnerability detection</li>
+                    <li>Code style consistency enforcement</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="mailto:chhetrialish83@gmail.com" target="_blank" title="Email">
+                <img src="../../assets/images/logos/gmail_logo.svg" alt="Email" class="footer-image email-logo">
+            </a>
+            <a href="https://www.linkedin.com/in/alish-chhetri/" target="_blank" title="LinkedIn">
+            <img src="../../assets/images/logos/linkedin_logo.svg" alt="LinkedIn Logo"
+                class="footer-image linkedin-logo">
+            </a>
+            <a href="https://github.com/AlishChhetri" target="_blank" title="GitHub">
+            <img src="../../assets/images/logos/github_logo.svg" alt="GitHub Logo" class="footer-image github-logo">
+            </a>
+        </div>
+    </footer>
+    <script src="../../assets/js/hexagon_background.js"></script>
+    <script src="../../assets/js/hello.js"></script>
+    <script src="../../assets/js/cursor.js"></script>
+    <script src="../../assets/js/search.js"></script>
+    <script src="../../assets/js/theme_toggle.js"></script>
+    <script src="../../assets/js/hexagon_navigation.js"></script>
+</body>
+
+</html> 
